@@ -25,10 +25,6 @@ footer {
     position: fixed;
     bottom: 0;
 }
-nav li {
-    display: inline;
-    padding: 4px;
-}
 nav a {
     color:#fafafa;
     text-transform: uppercase;
@@ -102,14 +98,6 @@ label{
     color: rgb(255, 0, 0);
     font-size: 14px;
   }
-  
-.error ul{
-    padding: 10px;
-    margin: auto;
-    list-style-type: none;
-    font-weight: bold;
-}
-
 .buttonDiv{
     text-align: center;
 }

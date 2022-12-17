@@ -20,7 +20,7 @@
     return true
   };
   if($form){
-    $('#adminlogin_form').on('submit',function(event)  {
+    $form.addEventListener("submit", function admin(event) {
     event.preventDefault();
     $(".error-msg").hide();
     var valid = false;
@@ -61,8 +61,8 @@
     }
 
     $.ajax({
-      type: $(this).attr('method'),
-      url: $(this).attr('action'),
+      type: "Post",
+      url: "/courses/admin",
       contentType: "application/json",
       data: JSON.stringify({
         email: emailVal,

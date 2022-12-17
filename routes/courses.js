@@ -13,7 +13,49 @@ const validate = require('../helper');
 const xss = require('xss');
 const adminCookieString = "AdminCookie"
 
-
+router.route('/admin/register')
+  .get(async (req, res) => {
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    if (sessionValidate.adminId) {
+      res.status(200).redirect("/courses");
+    } else  if(sessionValidate.studentId) {
+      res.status(200).redirect("/students/profile");
+    }else {
+      let error = "Not Authorized"
+      res.status(400).render("adminRegister", {
+        error: error
+      });
+    }
+  }).post(async (req, res) => {
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    let email = req.body.email
+    let password = req.body.password;
+    let passcode = req.body.passcode;
+    try {
+      passcode = await validate.validateName("Post Admin Register", passcode, "passcode");
+    } catch (error) {
+      return res.status(400).render("adminRegister", { error: error });
+    }
+    try {
+      email = await validate.validateEmail("Post Admin Register", email, "Email");
+    } catch (error) {
+      return res.status(400).render("adminRegister", { error: error });
+    }
+    try {
+      password = await validate.validatePassword("Post Admin Register", password);
+    } catch (error) {
+      return res.status(400).render("adminRegister", { error: error });
+    }
+    try {
+      const adminData = await courses.addAdmin(xss(passcode), xss(email), xss(password));
+      if (adminData) res.status(200).redirect("/courses/admin");
+      else {
+        return res.status(500).send("Internal Server Error!");
+      }
+    } catch (error) {
+      return res.status(400).send(error);
+    }
+  });
 router.get("/contactus", async (req, res) => {
   sessionValidate = validate.sessionValidation(req.session.AuthCookie)
   try {
@@ -207,14 +249,10 @@ router.route('/admin')
         req.session.AuthCookie = adminCookieString;
         res.redirect("/courses/add");
       } else {
-        return res.status(400).render("admin",{
-          error: "Either the email or password is invalid"
-        });
+        return res.status(500).send("Either the email or password is invalid");
       }
     } catch (error) {
-      return res.status(400).render("admin",{
-        error: error
-      });
+      return res.status(400).send(error);
     }
   })
 
@@ -425,5 +463,4 @@ router.get("/:id", async (req, res) => {
   }
  
 });
-
 module.exports = router;

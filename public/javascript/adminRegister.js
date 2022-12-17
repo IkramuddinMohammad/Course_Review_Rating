@@ -1,15 +1,12 @@
 (function ($) {
-  const $form = document.getElementById('register_form');
-  const firstName = document.getElementById('firstname');
-  const lastName = document.getElementById('lastname');
+  const $form = document.getElementById('adminregister_form');
+  const passcode = document.getElementById('passcode')
   const email = document.getElementById('email');
   const password = document.getElementById('password');
-  const firstnameError = document.getElementById('firstnameError');
-  const lastnameError = document.getElementById('lastnameError');
+  const passcodeError = document.getElementById('passcodeError');
   const emailError = document.getElementById('emailError');
   const passwordError = document.getElementById('passwordError');
   const error = document.getElementById('error-msg')
-  
 
   let validateEmail = (email) => {
     const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -25,93 +22,76 @@
     return true
   };
  if($form){
-  $form.addEventListener("submit", function register(event) { 
-    e.preventDefault();
+  $form.addEventListener("submit", function adminregister(event) { 
+    event.preventDefault();
     error.style.display = "none"
     error.innerHTML = "";
     var valid = false;
-    var firstNameVal = firstName.value.replace(/\s/g, "");
-    var lastNameVal = lastName.value.replace(/\s/g, "");
+    var passcodeVal = passcode.value.replace(/\s/g, "");
     var emailVal = email.value.replace(/\s/g, "");
     var passwordVal = password.value.replace(/\s/g, "");
 
-    if (firstNameVal.length == 0) {
-      firstnameError.style.display = "block";
-      firstnameError.innerHTML = "Please enter firstname"
-      firstnameError.show().fadeOut(12000);
-      firstName.focus();
-      valid = true
-    }
-
-    if (lastNameVal.length == 0) {
-      lastnameError.style.display = "block";
-      lastnameError.innerHTML = "Please enter lastname"
-      lastnameError.show().fadeOut(12000);
+    if (passcodeVal.length == 0) {
+      passcodeError.style.display = "block";
+      passcodeError.innerHTML = "Please enter firstname"
+      $("#passcodeError").show().fadeOut(12000);
+      passcodeError.focus();
       valid = true
     }
 
     if (emailVal.length == 0) {
       emailError.style.display = "block";
       emailError.innerHTML = "Please enter email"
-      emailError.show().fadeOut(12000);
+      $("#emailError").show().fadeOut(12000);
       valid = true;
     } else if (!validateEmail(emailVal)) {
       emailError.style.display = "block";
       emailError.innerHTML = "Please enter valid email"
-      emailError.show().fadeOut(12000);
+      $("#emailError").show().fadeOut(12000);
       valid = true;
     }
-
     if (passwordVal.length == 0) {
       passwordError.style.display = "block";
       passwordError.innerHTML = "Please enter password"
-      passwordError.show().fadeOut(12000);
+      $("#passwordError").show().fadeOut(12000);
       valid = true;
     } else if (passwordVal.length < 8) {
       passwordError.style.display = "block";
       passwordError.innerHTML = "Password should be atleast 8 characters long"
-      passwordError.show().fadeOut(12000);
+      $("#passwordError").show().fadeOut(12000);
       valid = true;
     } else if (!validatePassword(passwordVal)) {
       passwordError.style.display = "block";
       passwordError.innerHTML = "Password should contain one uppercase, one lower case, one special character and one number"
-      passwordError.show().fadeOut(12000);
+      $("#passwordError").show().fadeOut(12000);
       valid = true;
     }
-
+    
     if (valid) {
       return;
     }else{
-      firstnameError.style.display = "none";
-      lastnameError.style.display = "none";
+      passcodeError.style.display = "none";
       emailError.style.display = "none";
       passwordError.style.display = "none";
     }
-    var registerdetails = $('#register-details');
-
-    if (firstNameVal && lastNameVal && emailVal && passwordVal) {
-      var jsnoVal = false;
-      if (jsnoVal) {
+    var adminregisterdetails = $('#adminregister-details');
         $.ajax({
           type: "Post",
-          url: "/students/register",
+          url: "/courses/admin/register",
           contentType: 'application/json',
           data: JSON.stringify({
-            firstname: firstNameVal,
-            lastname: lastNameVal,
+            passcode: passcodeVal,
             email: emailVal,
             password: passwordVal
           }),
           dataType: "text",
           success: function(data) {
-            window.location.replace("/courses/admin");
+            window.location.replace("/");
           },error: function(r){
             error.style.display = "block"
             error.innerHTML = r.responseText
           }
         })
-      }
-    }
   });
 }
 })(window.jQuery);

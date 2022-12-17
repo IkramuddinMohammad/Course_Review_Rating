@@ -1,5 +1,5 @@
 (function ($) {
-  const $form = document.getElementById('login-form');
+  const $form = document.getElementById('login_form');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
   const emailError = document.getElementById('emailError');
@@ -19,9 +19,10 @@
     return true
   };
   if($form){
-    $('#login_form').on('submit',function(event)  {
+    $form.addEventListener("submit", function login(event) {
     event.preventDefault();
-    $(".error-msg").hide();
+    error.style.display = "none"
+    error.innerHTML = "";
     var valid = false;
     var emailVal = email.value;
     var passwordVal = password.value;
@@ -59,24 +60,20 @@
     }
 
     $.ajax({
-      type: $(this).attr('method'),
-      url: $(this).attr('action'),
+      type: "Post",
+      url: "/students/login",
       contentType: "application/json",
       data: JSON.stringify({
         email: emailVal,
         password: passwordVal,
       }),
       dataType: "text",
-      success: function (responseMessage) {
+      success: function(data) {
         window.location.replace("/");
-      },
-      error: function (responseError) {
-        console.log(responseError);
-        error.innerHTML = JSON.parse(
-          responseError.responseText
-        ).preventXSS();
-        error.show();
-      },
+      },error: function(r){
+        error.style.display = "block"
+        error.innerHTML = r.responseText
+      }
     });
   });
 }

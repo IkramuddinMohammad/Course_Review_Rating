@@ -1,7 +1,7 @@
 <main>
   <div class="loginPage" id="adminregister-details">
     <h2>please register with your admin email and also enter the passcode</h2>
-    <form class="registerForm" id="adminregister_form" name="RegisterForm" action="/students/register" method="POST">
+    <form class="registerForm" id="adminregister_form" name="RegisterForm" action="/courses/admin/register" method="POST">
       <div class="group">
         <label for="email">
           <input type="text" name="email" id="email" placeholder="Enter your Email"/>
@@ -24,6 +24,9 @@
         <button type="submit" class="btn">Register</button>
       </div>  
     </form>
+    {{#if error}}
+            <p id="error-msg" class="error-msg">{{error}}</p>
+    {{/if}}
   </div>
 
   <script
@@ -32,5 +35,5 @@
     crossorigin="anonymous"
   >
   </script>
-  <script src="/public/javascript/adminregister.js"></script>
+  <script src="/public/javascript/adminRegister.js"></script>
 </main>

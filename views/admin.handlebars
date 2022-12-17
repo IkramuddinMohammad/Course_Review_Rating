@@ -9,6 +9,7 @@
                 <input type="password" name="password" id="password" placeholder="Enter your Password" />
                 <span id="passwordError" class="error"></span>
             <button type="submit" class="btn">Login</button>
+            <p>Don't have account? Please <a href="/courses/admin/register">Admin Registration</a></p>
             {{#if error}}
                 <p class="error-msg">{{error}}</p>
             {{/if}}

@@ -6,16 +6,17 @@ const adminCookieString = "AdminCookie"
 
 let sessionValidation =  (authcookie) => {
   let studentLoggedIn = false, adminLoggedIn =false;
-  let studentId = "";
+  let studentId = "", adminId="";
   if (authcookie === adminCookieString) {
     studentLoggedIn = false;
     adminLoggedIn = true;
+    adminId = authcookie
   }else{
     studentId= authcookie
   }
   if (!studentId) studentLoggedIn = false;
   else studentLoggedIn = true;
-  return {adminLoggedIn: adminLoggedIn, studentLoggedIn:studentLoggedIn, studentId:studentId}
+  return {adminLoggedIn: adminLoggedIn, studentLoggedIn:studentLoggedIn, studentId:studentId, adminId:adminId}
 }
 
 

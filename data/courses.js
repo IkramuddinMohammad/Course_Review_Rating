@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb');
 const bcrypt = require("bcryptjs");
 const validate = require('../helper');
 const saltRounds = 16;
-
+const passcodeString = "onlyforadmin"
 module.exports = {
     async createCourse(name, courseId, credits, professorName, professorEmail, taName, taEmail) {
         name = await validate.validateName("createCourse", name, "course Name");
@@ -107,22 +107,28 @@ module.exports = {
         } else
             throw "checkAdmin: Either the email or password is invalid";
     },
-    async addAdmin(email, password) {
+    async addAdmin(passCode, email, password) {
+        passCode = validate.validateName("addAdmin", passCode, "PassCode");
         email = validate.validateEmail("addAdmin", email, "Email");
         password = validate.validatePassword("addAdmin", password);
-        const adminCollection = await admin();
-        email = email.toLowerCase();
-        const adm = await adminCollection.findOne({ email: email });
-        const passwordHash = await bcrypt.hash(password, saltRounds);
-        if (!adm) {
-            let newAdmin = {
-                email: email,
-                hashedPassword: passwordHash
-            }
-            const insertInfo = await adminCollection.insertOne(newAdmin);
-            if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "addAdmin: Not able to add new admin";
-            return { insertedAdmin: true };
-        } else
-            throw "addAdmin: Please try with other email. This email is already registered.";
+        if(passcodeString === passCode){
+            const adminCollection = await admin();
+            email = email.toLowerCase();
+            const adm = await adminCollection.findOne({ email: email });
+            const passwordHash = await bcrypt.hash(password, saltRounds);
+            if (!adm) {
+                let newAdmin = {
+                    email: email,
+                    hashedPassword: passwordHash
+                }
+                const insertInfo = await adminCollection.insertOne(newAdmin);
+                if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "addAdmin: Not able to add new admin";
+                return { insertedAdmin: true };
+            } else
+                throw "addAdmin: Please try with other email. This email is already registered.";
+        }else{
+            throw "addAdmin: Entered passcode is wrong. Passcode is case-sensitive. Try Again";
+        }
+        
     },
 }

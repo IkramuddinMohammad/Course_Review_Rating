@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
 
 router.post("/:id/add", async (req, res) => {
   let id = req.params.id;
-  let rating = req.body.rating;
+  let rating = Number(req.body.rating);
   let reviewText = req.body.reviewText;
   let semesterVal = req.body.selectSemester
   let studentId = req.session.AuthCookie;

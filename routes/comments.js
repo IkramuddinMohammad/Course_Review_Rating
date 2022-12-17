@@ -38,7 +38,7 @@ router.post('/:studentId/:reviewId/:courseId/add', async (req, res) => {
     return res.status(400).render("error",{error: error});
   }
   try {
-    coomentData = await comments.createComment("Post Add", studentId, reviewId, commentVal)
+    coomentData = await comments.createComment(studentId, reviewId, commentVal)
     if (coomentData) return res.redirect("/courses/" + courseId);
     else return res.status(404).send();
   } catch (error) {
@@ -100,7 +100,7 @@ router.post("/:courseId/:commentId/edit", async (req, res) => {
     return res.status(400).render("error",{error: error});
   }
   try {
-    await comments.updateComment("Post Edit", commentId, commentVal);
+    await comments.updateComment(commentId, commentVal);
     return res.redirect("/courses/" + courseId);
   } catch (error) {
     return res.status(404).render("error",{error: error});

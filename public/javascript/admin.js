@@ -1,9 +1,10 @@
 (function ($) {
-  const $form = document.getElementById('adminlogin-form');
+  const $form = document.getElementById('adminlogin_form');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
   const emailError = document.getElementById('emailError');
   const passwordError = document.getElementById('passwordError');
+  const error = $("#error-msg");
   
   let validateEmail = (email) => {
     const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -19,7 +20,7 @@
     return true
   };
   if($form){
-  $form.addEventListener("submit", function admin(event) {
+    $('#adminlogin_form').on('submit',function(event)  {
     event.preventDefault();
     $(".error-msg").hide();
     var valid = false;
@@ -60,8 +61,8 @@
     }
 
     $.ajax({
-      type: "POST",
-      url: "/courses/admin",
+      type: $(this).attr('method'),
+      url: $(this).attr('action'),
       contentType: "application/json",
       data: JSON.stringify({
         email: emailVal,
@@ -72,9 +73,7 @@
         window.location.replace("/");
       },
       error: function (responseError) {
-        error.innerHTML = JSON.parse(
-          responseError.responseText
-        ).message.preventXSS();
+        error.innerHTML = responseError.responseText
         error.show();
       },
     });

@@ -1,5 +1,5 @@
 (function ($) {
-  const $form = document.getElementById('register-form');
+  const $form = document.getElementById('register_form');
   const firstName = document.getElementById('firstname');
   const lastName = document.getElementById('lastname');
   const email = document.getElementById('email');
@@ -24,7 +24,7 @@
     return true
   };
  if($form){
-  $form.addEventListener("submit", function register(e) {
+  $('#register_form').on('submit',function(event) {
     e.preventDefault();
     $(".error-msg").hide();
     var valid = false;
@@ -91,8 +91,8 @@
       var jsnoVal = false;
       if (jsnoVal) {
         $.ajax({
-          method: $form.attr('method'),
-          url: $form.attr('action'),
+          type: $(this).attr('method'),
+          url: $(this).attr('action'),
           contentType: 'application/json',
           data: JSON.stringify({
             firstname: firstNameVal,

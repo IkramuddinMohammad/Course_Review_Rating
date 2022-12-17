@@ -14,7 +14,7 @@
             <div>
                 <label>{{course.rating}}/5 ({{course.reviews.length}} Reviews)</label>
             </div>
-       
+
             {{#each semsVal}}
             <div>
                 <p>{{this.val}}: {{this.semrat}} </p>
@@ -28,16 +28,20 @@
         <div class="reviews">
             <div class="container-fullmode">
                 <label>
-                    <p><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a></p>
+                    <p><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a>
+                    </p>
                     <p>{{this.semesterVal}}, Rating: {{this.rating}}/5</p>
                     <p>{{this.reviewText}}</p>
                 </label>
                 <h4>Comments</h4>
                 <div class="comments">
                     {{#if ../studentLoggedIn}}
-                    <form id="comment_form" name="commentForm" class="form-container" action="/comments/{{../currentStudentsData._id}}/{{this._id}}/{{this.courseId}}/add" method="POST">
+                    <form id="comment_form" class="form-container"
+                        action="/comments/{{../currentStudentsData._id}}/{{this._id}}/{{this.courseId}}/add"
+                        onsubmit="return commentValidate(this);" method="POST">
                         <label for="commentValue">
-                            <input class="comment_text" type="textarea" name="commentValue" id="commentValue" placeholder="comment" rows="3" />
+                            <input class="comment_text" type="textarea" name="commentValue" id="commentValue"
+                                placeholder="comment" rows="3" />
                             <span id="commentValueError" class="error"></span>
                         </label>
                         <button type="submit" class="btn">Submit</button>
@@ -47,7 +51,7 @@
                     <div class="container-fullmode" id="white-card">
                         <p class="inline_para"><a href="../students/{{this.student._id}}">{{this.student.firstName}}
                                 {{this.student.lastName}}</a></p>
-                        <p id="comment-Val">{{this.commentText}}</p> 
+                        <p id="comment-Val">{{this.commentText}}</p>
                     </div>
                     {{/each}}
                 </div>
@@ -56,19 +60,19 @@
         {{/each}}
     </div>
     {{#if adminLoggedIn}}
-        <button class="add_review_btn" onclick="location.href='../courses/{{course._id}}/edit';">Edit course</button>   
+    <button class="add_review_btn" onclick="location.href='../courses/{{course._id}}/edit';">Edit course</button>
     {{else if studentLoggedIn}}
     {{#if currentStudentsData.reviewedcoursePage}}
-        <button id="reviewed_popup" class="add_review_btn" onclick="openAlert()">Add a Review</button>
+    <button id="reviewed_popup" class="add_review_btn" onclick="openAlert()">Add a Review</button>
     {{else}}
-     <button id="check_review_popup" class="add_review_btn" onclick="openCheckAlert()">Add a Review</button>
-    {{/if}} 
+    <button id="check_review_popup" class="add_review_btn" onclick="openCheckAlert()">Add a Review</button>
+    {{/if}}
     {{else}}
-        <button class="add_review_btn" onclick="location.href='../students/login';">Add a Review</button>
+    <button class="add_review_btn" onclick="location.href='../students/login';">Add a Review</button>
     {{/if}}
     <div class="form-popup" id="opencheck_form">
         <h2>Have you completed the course or registered in the course already?</h2>
-        <form id="taken_form" name="taken_form" class="form-container" action="javascript:void(0);">
+        <form id="taken_form" class="form-container" action="javascript:void(0);">
             <button type="button" class="checkbtn" onclick="opencreateReview()">Yes</button>
             <button type="button" class="checkbtn" onclick="closeCheckAlert()">No</button>
         </form>
@@ -81,7 +85,7 @@
     </div>
     <div class="form-popup" id="openadd_form">
         <h2>Add a Review</h2>
-        <form id="review_form" action="/reviews/{{course._id}}/add" method="POST" >
+        <form id="review_form" action="/reviews/{{course._id}}/add" onsubmit="return reviewValidate(this);" method="POST">
             <p> Select semester:
                 <select name="selectSemester" id="selectSemester">
                     <option name="fall2022" value="fall2022">Fall 2022</option>
@@ -91,7 +95,7 @@
             </p>
             <label for="rating">
                 <input type="number" name="rating" id="rating" placeholder="Enter your Rating">
-                 <span id="ratingError" class="error"></span>
+                <span id="ratingError" class="error"></span>
             </label>
             <label for="reviewText">
                 <input type="text" name="reviewText" id="reviewText" placeholder="Enter your Review">
@@ -109,6 +113,7 @@
         </form>
     </div>
     <div>
+        <p class="error-msg"></p>
     </div>
     <script>
         function opencreateReview() {
@@ -118,7 +123,7 @@
         }
         function openCheckAlert() {
             document.getElementById("opencheck_form").style.display = "block";
-             document.getElementsByClassName("add_review_btn")[0].style.display = "none"
+            document.getElementsByClassName("add_review_btn")[0].style.display = "none"
         }
         function openAlert() {
             document.getElementById("openalert_form").style.display = "block";
@@ -126,7 +131,7 @@
         }
         function closeCheckAlert() {
             document.getElementById("closecheck_form").style.display = "block";
-            document.getElementById("opencheck_form").style.display = "none"; 
+            document.getElementById("opencheck_form").style.display = "none";
             document.getElementsByClassName("add_review_btn")[0].style.display = "none"
         }
         function closeCheckFormAlert() {
@@ -141,9 +146,55 @@
             document.getElementById("openalert_form").style.display = "none";
             document.getElementsByClassName("add_review_btn")[0].style.display = "block"
         }
+        function reviewValidate(form) {
+            const ratingError = document.getElementById('ratingError');
+            const reviewTextError = document.getElementById('reviewTextError');
+            if (form) {
+                    var valid = false;
+                    let rating = document.forms["review_form"]["rating"].value;
+                    let reviewText = document.forms["review_form"]["reviewText"].value;
+
+                    if (reviewText.trim().length == 0) {
+                        reviewTextError.style.display = "block";
+                        reviewTextError.innerHTML = "Please enter review"
+                        valid= true
+                        return false
+                    }
+                    if (!/^[0-9]+$/.test(rating)) {
+                        ratingError.style.display = "block";
+                        ratingError.innerHTML = "Please enter rating"
+                        valid= true
+                        return false
+                    } else if (rating < 1 || rating > 5) {
+                        ratingError.style.display = "block";
+                        ratingError.innerHTML = "Please enter rating between 1 and 5"
+                        valid= true
+                        return false
+                    }
+                    if (!valid) {
+                        ratingError.style.display = "none";
+                        reviewTextError.style.display = "none";
+                        return true;
+                    }
+            }
+        }
+        function commentValidate(form) {
+            const commentValueError = document.getElementById('commentValueError');
+            if (form) {
+                
+                    var valid = false;
+                    let commentValue = document.forms["comment_form"]["commentValue"].value;
+                    if (commentValue.trim().length == 0) {
+                        commentValueError.style.display = "block";
+                        commentValueError.innerHTML = "Please enter comment"
+                        valid= true
+                        return false
+                    }
+                    if (!valid){
+                        commentValueError.style.display = "none";
+                        return true
+                    }
+            }
+        }
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
-        </script>
-    <script src="/public/javascript/course.js"></script>
 </main>

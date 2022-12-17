@@ -6,8 +6,8 @@ const { ObjectId } = require('mongodb');
 
 module.exports = {
     async createComment(studentId, reviewId, commentInput) {
-        id = await validate.validateId("createComment", studentId, "studentId");
-        id = await validate.validateId("createComment", reviewId, "validateId");
+        studentId = await validate.validateId("createComment", studentId, "studentId");
+        reviewId = await validate.validateId("createComment", reviewId, "validateId");
         commentInput = await validate.validateString("createComment", commentInput, "commentInput")
         const commentCollection = await comments();
         let addNewComment = {
@@ -16,7 +16,9 @@ module.exports = {
             commentInput: commentInput
         }
         const insertInfo = await commentCollection.insertOne(addNewComment);
+        
         const reviewCollection = await reviews();
+
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {
             throw 'createComment: Could not add new Review';
         } else {

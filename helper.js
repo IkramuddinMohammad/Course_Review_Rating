@@ -13,7 +13,7 @@ let validateId = (methodName, id, tex) => {
   if (typeof id !== 'string') throw `${methodName}: ${tex} should be a string`;
   if (id.trim().length === 0) throw `${methodName}: ${tex} cannot be empty or space`;
   id = id.trim();
-  if (!ObjectId.isValid(id)) throw `${methodName}: invalid object id`;
+  if (!ObjectId.isValid(id)) throw `${methodName}: ${tex} invalid object id`;
   return id
 }; 
 

@@ -4,6 +4,7 @@
   const password = document.getElementById('password');
   const emailError = document.getElementById('emailError');
   const passwordError = document.getElementById('passwordError');
+  const error = $("#error-msg");
   let validateEmail = (email) => {
     const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(email))
@@ -18,7 +19,7 @@
     return true
   };
   if($form){
-  $form.addEventListener("submit", function login(event) {
+    $('#login_form').on('submit',function(event)  {
     event.preventDefault();
     $(".error-msg").hide();
     var valid = false;
@@ -58,8 +59,8 @@
     }
 
     $.ajax({
-      type: "POST",
-      url: "/students/login",
+      type: $(this).attr('method'),
+      url: $(this).attr('action'),
       contentType: "application/json",
       data: JSON.stringify({
         email: emailVal,
@@ -73,7 +74,7 @@
         console.log(responseError);
         error.innerHTML = JSON.parse(
           responseError.responseText
-        ).message.preventXSS();
+        ).preventXSS();
         error.show();
       },
     });

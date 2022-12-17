@@ -4,7 +4,7 @@
   const password = document.getElementById('password');
   const emailError = document.getElementById('emailError');
   const passwordError = document.getElementById('passwordError');
-  const error = $("#error-msg");
+  const error = document.getElementById('error-msg');
   
   let validateEmail = (email) => {
     const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;

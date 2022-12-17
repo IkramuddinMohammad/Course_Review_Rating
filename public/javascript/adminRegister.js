@@ -74,7 +74,7 @@
       emailError.style.display = "none";
       passwordError.style.display = "none";
     }
-    var adminregisterdetails = $('#adminregister-details');
+   
         $.ajax({
           type: "Post",
           url: "/courses/admin/register",

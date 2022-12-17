@@ -26,7 +26,7 @@
   };
  if($form){
   $form.addEventListener("submit", function register(event) { 
-    e.preventDefault();
+    event.preventDefault();
     error.style.display = "none"
     error.innerHTML = "";
     var valid = false;
@@ -38,44 +38,43 @@
     if (firstNameVal.length == 0) {
       firstnameError.style.display = "block";
       firstnameError.innerHTML = "Please enter firstname"
-      firstnameError.show().fadeOut(12000);
-      firstName.focus();
+      $("#firstnameError").show().fadeOut(12000);
       valid = true
     }
 
     if (lastNameVal.length == 0) {
       lastnameError.style.display = "block";
       lastnameError.innerHTML = "Please enter lastname"
-      lastnameError.show().fadeOut(12000);
+      $("#lastnameError").show().fadeOut(12000);
       valid = true
     }
 
     if (emailVal.length == 0) {
       emailError.style.display = "block";
       emailError.innerHTML = "Please enter email"
-      emailError.show().fadeOut(12000);
+      $("#emailError").show().fadeOut(12000);
       valid = true;
     } else if (!validateEmail(emailVal)) {
       emailError.style.display = "block";
       emailError.innerHTML = "Please enter valid email"
-      emailError.show().fadeOut(12000);
+      $("#emailError").show().fadeOut(12000);
       valid = true;
     }
 
     if (passwordVal.length == 0) {
       passwordError.style.display = "block";
       passwordError.innerHTML = "Please enter password"
-      passwordError.show().fadeOut(12000);
+      $("#passwordError").show().fadeOut(12000);
       valid = true;
     } else if (passwordVal.length < 8) {
       passwordError.style.display = "block";
       passwordError.innerHTML = "Password should be atleast 8 characters long"
-      passwordError.show().fadeOut(12000);
+      $("#passwordError").show().fadeOut(12000);
       valid = true;
     } else if (!validatePassword(passwordVal)) {
       passwordError.style.display = "block";
       passwordError.innerHTML = "Password should contain one uppercase, one lower case, one special character and one number"
-      passwordError.show().fadeOut(12000);
+      $("#passwordError").show().fadeOut(12000);
       valid = true;
     }
 
@@ -87,11 +86,8 @@
       emailError.style.display = "none";
       passwordError.style.display = "none";
     }
-    var registerdetails = $('#register-details');
-
-    if (firstNameVal && lastNameVal && emailVal && passwordVal) {
-      var jsnoVal = false;
-      if (jsnoVal) {
+    
+   
         $.ajax({
           type: "Post",
           url: "/students/register",
@@ -104,14 +100,13 @@
           }),
           dataType: "text",
           success: function(data) {
-            window.location.replace("/courses/admin");
+            window.location.replace("/");
           },error: function(r){
             error.style.display = "block"
             error.innerHTML = r.responseText
           }
         })
-      }
-    }
+      
   });
 }
 })(window.jQuery);

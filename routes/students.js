@@ -15,19 +15,12 @@ router
     res.status(200).redirect("/");
     return;
   })
-router.get("/", async (req, res) => {
-  try {
-    const studentList = await students.getAllStudents();
-    res.status(200).json(studentList);
-  } catch (error) {
-   return res.status(404).render("error", {error: error});
-  }
-});
 
 router
   .route('/login')
   .get(async (req, res) => {
-   let studentId = req.session.AuthCookie;
+   sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+   let studentId = sessionValidate.studentId;
    if (studentId) {
       res.status(200).redirect("/courses");
     } else {
@@ -61,15 +54,15 @@ router
           });
       }
     } catch (error) {
-      return res.status(400).render("error", {error: error});
+      return res.status(400).render("login", {error: error});
     }
 });
 
 
   router.route('/register')
   .get(async (req, res) => {
-    let studentId = req.session.AuthCookie;
-    if (studentId) {
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    if (sessionValidate.studentId) {
       res.status(200).redirect("/students/profile");
     } else {
       let error = "Not Authorized"
@@ -78,6 +71,7 @@ router
       });
     }
   }).post(async (req, res) => {
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
     let firstName = req.body.firstname
     let lastName = req.body.lastname;
     let email = req.body.email
@@ -85,43 +79,44 @@ router
     try{
       firstName = await validate.validateName("Post Register", firstName, "First Name" );
     } catch (error) {
-      return res.status(400).render("error", {error: error});
+      return res.status(400).render("register", {error: error});
     }
     try{
       lastName = await validate.validateName("Post Register", lastName, "Last Name" );
     } catch (error) {
-      return res.status(400).render("error", {error: error});
+      return res.status(400).render("register", {error: error});
     }
     try{
       email = await validate.validateEmail("Post Register", email, "Email");
     } catch (error) {
-      return res.status(400).render("error", {error: error});
+      return res.status(400).render("register", {error: error});
     }
     try{
       password = await validate.validatePassword("Post Register", password);
     } catch (error) {
-      return res.status(400).render("error", {error: error});
+      return res.status(400).render("register", {error: error});
     }
     try {
     const studentData =  await students.createStudents(xss(firstName), xss(lastName), xss(email),  xss(password));
     if (studentData) res.status(200).redirect("/students/login");
     else {
-      return res.status(500).error("error", {
+      return res.status(500).error("register", {
            error: "Internal Server Error"
            });
       }
     } catch (error) {
-      return res.status(400).render("error", {error: error});
+      return res.status(400).render("register", {error: error});
     }       
     
   });
 
   router.get("/myprofile", async (req, res) => {
-    let studentId = req.session.AuthCookie;
-    if (studentId) {
-      const currentStudents = await students.getStudents(studentId);
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    
+    if (sessionValidate.studentId) {
+      const currentStudents = await students.getStudents(sessionValidate.studentId);
         return res.status(307).render('myprofile', {
-          id : studentId,
+          id : sessionValidate.studentId,
           firstName: currentStudents.firstName,
           lastName: currentStudents.lastName,
           email: currentStudents.email
@@ -132,9 +127,9 @@ router
   });
 
   router.get("/profile", async (req, res) => {
-    let studentId = req.session.AuthCookie;
-    if (studentId) {
-      let studentData = await students.getStudents(studentId);
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    if (sessionValidate.studentId) {
+      let studentData = await students.getStudents(sessionValidate.studentId);
       let reviewObject = [];
       for (i=0; i<studentData.reviewIds.length; i++) {
         let latestReview = await reviews.getReview(studentData.reviewIds[i]);
@@ -146,29 +141,34 @@ router
         reviewObject.push(reviewInfo);
       }
       return res.status(307).render('profile', { 
-        id: studentId,
+        id: sessionValidate.studentId,
         firstName: studentData.firstName,
         lastName: studentData.lastName,
         email: studentData.email,
         reviews: reviewObject,
-        studentLoggedIn: true});
+        studentLoggedIn: sessionValidate.studentLoggedIn});
     } else {
-      res.status(403).render("login");
+      res.status(403).render("login",{
+        error: "something went wrong"
+      });
     }  
 });
 
 router.get("/:id", async (req, res) => {
-  let studentLoggedIn = false;
-  let studentId = req.session.AuthCookie
+  sessionValidate = validate.sessionValidation(req.session.AuthCookie)
   let id = req.params.id;
     try{
       id = await validate.validateId("Get id", id, "id");
     } catch (error) {
-      return res.status(400).render("error", {error: error});
+      return res.status(400).render("error", { 
+        error: error, 
+        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        adminLoggedIn: sessionValidate.adminLoggedIn
+      });
     }
-  if (studentId)
-    studentLoggedIn = true;
-  if (id === studentId) return res.redirect("/students/profile");
+  if (sessionValidate.studentId)
+
+  if (id === sessionValidate.studentId) return res.redirect("/students/profile");
     try {
       let studentData = await students.getStudents(id);
       let reviewObj = [];
@@ -183,10 +183,15 @@ router.get("/:id", async (req, res) => {
         firstName: studentData.firstName, 
         lastName: studentData.lastName, 
         reviews: reviewObj,
-        studentLoggedIn: studentLoggedIn
+        studentLoggedIn: sessionValidate.studentLoggedIn,
+        adminLoggedIn: sessionValidate.adminLoggedIn
       });
     } catch (error) {
-      return res.status(404).render("error", {error: error});
+      return res.status(404).render("error", { 
+        error: error, 
+        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        adminLoggedIn: sessionValidate.adminLoggedIn
+      });
     }
 });
 

@@ -2,8 +2,24 @@ const { ObjectId } = require('mongodb');
 const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 //const regex = new RegExp('([A-Za-z0-9  ])\w+');
 const passwordRegex = new RegExp('^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$')
+const adminCookieString = "AdminCookie"
 
-let semsterValue =  (semsterval) => {var reg = /[^0-9](?=[0-9])/g;
+let sessionValidation =  (authcookie) => {
+  let studentLoggedIn = false, adminLoggedIn =false;
+  let studentId = "";
+  if (authcookie === adminCookieString) {
+    studentLoggedIn = false;
+    adminLoggedIn = true;
+  }else{
+    studentId= authcookie
+  }
+  if (!studentId) studentLoggedIn = false;
+  else studentLoggedIn = true;
+  return {adminLoggedIn: adminLoggedIn, studentLoggedIn:studentLoggedIn, studentId:studentId}
+}
+
+
+let semsterValue =  (semsterval) => {
   var reg = /[^0-9](?=[0-9])/g;
   var result = semsterval.replace(reg, '$& ');
   return (result[0].toUpperCase() + result.slice(1))
@@ -60,6 +76,7 @@ let validateNumber = (methodName, num, tex) => {
 };
 
 module.exports = {
+  sessionValidation,
   semsterValue,
   validateId,
   validateName,

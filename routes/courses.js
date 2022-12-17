@@ -15,34 +15,19 @@ const adminCookieString = "AdminCookie"
 
 
 router.get("/contactus", async (req, res) => {
-  let studentLoggedIn = false, adminLoggedIn =false;
-  let studentId = "";
-  if (req.session.AuthCookie === adminCookieString) {
-    studentLoggedIn = false;
-    adminLoggedIn = true;
-  }else{
-    studentId= req.session.AuthCookie
-  }
-  if (!studentId) studentLoggedIn = false;
-  else studentLoggedIn = true;
+  sessionValidate = validate.sessionValidation(req.session.AuthCookie)
   try {
    res.status(200).render("contactUs")
   } catch (error) {
-    returnres.status(404).render("error",{error: error});
+    returnres.status(404).render("error",{
+      error: error, 
+      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      adminLoggedIn: sessionValidate.adminLoggedIn
+    });
   }
 });
 router.get("/", async (req, res) => {
-  let studentLoggedIn = false;
-  let studentId = "";
-  let adminLoggedIn =false;
-  if (req.session.AuthCookie === adminCookieString) {
-    studentLoggedIn = false;
-    adminLoggedIn = true;
-  }else{
-    studentId= req.session.AuthCookie
-  }
-  if (!studentId) studentLoggedIn = false;
-  else studentLoggedIn = true;
+  sessionValidate = validate.sessionValidation(req.session.AuthCookie)
   try {
     let courseList = await courses.getAllcourses();
     let getcourseList = [];
@@ -66,37 +51,42 @@ router.get("/", async (req, res) => {
     res.status(200).render("courses", 
     { 
       courses: getcourseList, 
-      studentLoggedIn: studentLoggedIn, 
-      adminLoggedIn: adminLoggedIn 
+      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      adminLoggedIn: sessionValidate.adminLoggedIn 
     });
   } catch (error) {
-    return res.status(404).render("error",{error: error});
+    return res.status(404).render("error",{
+      error: error, 
+      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      adminLoggedIn: sessionValidate.adminLoggedIn});
   }
 });
 
 router.route("/:id/edit")
   .get(async (req, res) => {
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
     let id = req.params.id;
     try {
       id = await validate.validateId("Get Edit", id, "id");
     } catch (error) {
-      return res.status(400).json({
-        error: error
+      return res.status(400).render("error",{
+        error: error, 
+        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
-    let adminLoggedIn = false;
-    if (req.session.AuthCookie) {
-      adminLoggedIn = true;
+    if (sessionValidate.adminLoggedIn) {
       let course = await courses.getCourse(req.params.id)
       res.render("editCourse", {
         course: course,
-        adminLoggedIn: adminLoggedIn
+        adminLoggedIn: sessionValidate.adminLoggedIn
       });
     } else {
       res.status(401).redirect("/courses/admin");
     }
   }).post(async (req, res) => {
-    if (!req.session.AuthCookie) res.status(401).redirect("/courses/admin");
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    if (!sessionValidate.adminLoggedIn) res.status(401).redirect("/courses/admin");
     else {
       let id = req.params.id;
       let name = req.body.name;
@@ -109,47 +99,83 @@ router.route("/:id/edit")
       try {
         id = await validate.validateId("Post Edit", id, "id");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         name = await validate.validateString("Post Edit", name, "name");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         courseId = await validate.validateString("Post Edit", courseId, "courseId");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         professorName = await validate.validateString("Post Edit", professorName, "Professor Name");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         credits = await validate.validateNumber("Post Edit", credits, "credits");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         taName = await validate.validateString("Post Edit", taName, "TA Name");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         professorEmail = await validate.validateEmail("Post Edit", professorEmail, "Professor Email");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         taEmail = await validate.validateEmail("Post Edit", taEmail, "TA Email");
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       try {
         await courses.updateCourse(id, name, courseId, credits, professorName, professorEmail, taName, taEmail);
       } catch (error) {
-        return res.status(400).render("error",{error: error});
+        return res.status(400).render("error",{
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
+        });
       }
       res.redirect("/courses");
     }
@@ -164,12 +190,16 @@ router.route('/admin')
       email = await validate.validateEmail("Get Admin", email, "Email");
       email = email.toLowerCase()
     } catch (error) {
-      return res.status(400).render("error",{error: error});
+      return res.status(400).render("admin",{
+        error: error
+      });
     }
     try {
       password = await validate.validatePassword("Get Admin", password);
     } catch (error) {
-      return res.status(400).render("error",{error: error});
+      return res.status(400).render("admin",{
+        error: error
+      });
     }
     try {
       const adminData = await courses.checkAdmin(xss(email), xss(password));
@@ -177,10 +207,12 @@ router.route('/admin')
         req.session.AuthCookie = adminCookieString;
         res.redirect("/courses/add");
       } else {
-        return res.status(400).render("error",{error: "Either the email or password is invalid"});
+        return res.status(400).render("admin",{
+          error: "Either the email or password is invalid"
+        });
       }
     } catch (error) {
-      return res.status(400).json({
+      return res.status(400).render("admin",{
         error: error
       });
     }
@@ -189,17 +221,16 @@ router.route('/admin')
 router
   .route("/add")
   .get(async (req, res) => {
-    let adminLoggedIn = false;
-    if (req.session.AuthCookie) {
-      adminLoggedIn = true;
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    if (sessionValidate.adminLoggedIn) {
       res.render("addCourse", {
-        adminLoggedIn: adminLoggedIn
+        adminLoggedIn: sessionValidate.adminLoggedIn
       });
     } else {
       res.status(401).redirect("/courses/admin");
     }
   }).post(async (req, res) => {
-    if (!req.session.AuthCookie) {
+    if (!sessionValidate.adminLoggedIn) {
       res.status(401).redirect("/courses/admin");
     } else {
       let name = req.body.name;
@@ -213,58 +244,68 @@ router
         name = await validate.validateString("Post Add", name, "Name");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
         });
       }
       try {
         courseId = await validate.validateString("Post Add", courseId, "Course id");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
-        });
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn});
       }
       try {
         professorName = await validate.validateString("Post Add", professorName, "Professor Name");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn
         });
       }
       try {
         credits = await validate.validateNumber("Post Add", credits, "credits");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
-        });
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn});
       }
       try {
         taName = await validate.validateString("Post Add", taName, "TA Name");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
-        });
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn});
       }
       try {
         professorEmail = await validate.validateEmail("Post Add", professorEmail, "Professor Email");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
-        });
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn});
       }
       try {
         taEmail = await validate.validateEmail("Post Add", taEmail, "TA Email");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
-        });
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn});
       }
       try {
         await courses.createCourse(name, courseId, credits, professorName, professorEmail, taName, taEmail);
         res.redirect("/courses");
       } catch (error) {
         return res.status(400).render("error",{
-          error: error
-        });
+          error: error, 
+          studentLoggedIn: sessionValidate.studentLoggedIn, 
+          adminLoggedIn: sessionValidate.adminLoggedIn});
       }
     }
   })
@@ -272,12 +313,18 @@ router
 router.get("/:id", async (req, res) => {
   let id = req.params.id;
   let studentId = "";
-  let studentLoggedIn = false, studentReviewLoggedIn = false, adminLoggedIn = false;
+  sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+  let studentReviewLoggedIn = false;
+  if(sessionValidate.studentLoggedIn){
+    studentId = sessionValidate.studentId
+  }
   try {
     id = await validate.validateId("Get id", id, "id");
   } catch (error) {
     return res.status(400).render("error",{
-      error: error
+      error: error, 
+      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
   try {
@@ -290,7 +337,11 @@ router.get("/:id", async (req, res) => {
     for await (const doc of aggRating) {
       const coursCollection = await cours();
       const updated = await coursCollection.updateOne({ _id: ObjectId(id) }, { $set: { rating: doc.rating } })
-      if (!updated.matchedCount && !updated.modifiedCount) res.status(500).json({ error: "Could not update rating" });
+      if (!updated.matchedCount && !updated.modifiedCount) res.status(500).render("error",{ 
+        error: "Could not update rating", 
+        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        adminLoggedIn: sessionValidate.adminLoggedIn 
+      });
     }
     const semRating = reviewCollection.aggregate([
       {
@@ -329,7 +380,9 @@ router.get("/:id", async (req, res) => {
           }
         } catch (error) {
           return res.status(400).render("error",{
-            error: error
+            error: error, 
+            studentLoggedIn: sessionValidate.studentLoggedIn, 
+            adminLoggedIn: sessionValidate.adminLoggedIn
           });
         }
         review.commentList = listOfComments;
@@ -345,19 +398,12 @@ router.get("/:id", async (req, res) => {
       }
     } catch (error) {
       return res.status(400).render("error",{
-        error: error
-      });
+        error: error, 
+        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        adminLoggedIn: sessionValidate.adminLoggedIn});
     }
     
-  if (req.session.AuthCookie === adminCookieString) {
-    studentLoggedIn = false;
-    adminLoggedIn = true;
-  }else{
-    studentId= req.session.AuthCookie
-  }
-  if (!studentId) studentLoggedIn = false;
-    else {
-      studentLoggedIn = true;
+  if (sessionValidate.studentLoggedIn){
       studentData = await students.getStudents(studentId);
       studentData.reviewedcoursePage = listOfReviews.some(rev => rev.studentId === studentData._id.toString());
     }
@@ -367,14 +413,15 @@ router.get("/:id", async (req, res) => {
       semsVal: semsterValu,
       reviews: listOfReviews,
       currentStudentsData: studentData,
-      studentLoggedIn: studentLoggedIn,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       studentReviewLoggedIn: studentReviewLoggedIn,
-      adminLoggedIn: adminLoggedIn
+      adminLoggedIn: sessionValidate.adminLoggedIn
     })
   } catch (error) {
     return res.status(404).render("error",{
-      error: error
-    });
+      error: error, 
+      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      adminLoggedIn: sessionValidate.adminLoggedIn});
   }
  
 });

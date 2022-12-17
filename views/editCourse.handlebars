@@ -1,27 +1,34 @@
 <main>
     <div class="container">
         <h1>Edit course</h1>
-        <form method="POST" action="/courses/{{course._id}}/edit">
+        <form method="POST" id="editcourse_form" action="/courses/{{course._id}}/edit">
             <label for="name">Course Name: </label>
-            <input type="text" name="name" id="name" value="{{course.name}}" placeholder="Course Name" readonly />
+                <input type="text" name="name" id="name" value="{{course.name}}" placeholder="Course Name" readonly />
             <label for="courseid">Course Id: </label>
-            <input type="text" name="courseId" id="courseId" value="{{course.courseId}}" placeholder="Course Id"
+                <input type="text" name="courseId" id="courseId" value="{{course.courseId}}" placeholder="Course Id"
                 readonly />
             <label for="credits">Course Credits: </label>
-            <input type="text" name="credits" id="credits" value="{{course.credits}}" placeholder="Course Credits"
+                <input type="number" name="credits" id="credits" value="{{course.credits}}" placeholder="Course Credits"
                 readonly />
             <label for="professorName">Professor Name: </label>
-            <input type="text" name="professorName" id="professorName" value="{{course.professorName}}"
-                placeholder="Professor Name" required/>
+            <span id="professorNameError" class="error"></span>
+                <input type="text" name="professorName" id="professorName" value="{{course.professorName}}"
+                placeholder="Professor Name">
             <label for="professorEmail">Professor email: </label>
-            <input type="text" name="professorEmail" id="professorEmail" value="{{course.professorEmail}}"
-                placeholder="Professor email" required/>
+                <input type="text" name="professorEmail" id="professorEmail" value="{{course.professorEmail}}"
+                placeholder="Professor email">
+                <span id="professorEmailError" class="error"></span>
             <label for="taName">TA Name: </label>
-            <input type="text" name="taName" id="taName" value="{{course.taName}}" placeholder="TA Name" required/>
+                <input type="text" name="taName" id="taName" value="{{course.taName}}" placeholder="TA Name">
+                <span id="taNameError" class="error"></span>
             <label for="taEmail">TA Email: </label>
-            <input type="text" name="taEmail" id="taEmail" value="{{course.taEmail}}" placeholder="TA Email" required/>
+                <input type="text" name="taEmail" id="taEmail" value="{{course.taEmail}}" placeholder="TA Email">
+                <span id="taEmailError" class="error"></span>
             <input type="submit" value="Edit Course" class="btn" />
         </form>
     </div>
-    
+     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        </script>
+    <script src="/public/javascript/editCourse.js"></script>
 </main>

@@ -316,7 +316,11 @@ label{
     color: rgb(255, 255, 255);
     background-color: #1575b9;
 }
-  
+
+.checkbtn {
+    display: inline-block;
+    margin: 5px; /* space between buttons */
+}
 .form-popup {
     display: none;
     position: fixed;

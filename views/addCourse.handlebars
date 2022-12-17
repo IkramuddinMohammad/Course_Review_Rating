@@ -1,22 +1,35 @@
 <main>
     <div class="container">
         <h1>Add course</h1>
-        <form method="POST" action="/courses/add">
+        <form method="POST" id="addcourse_form" action="/courses/add">
             <label for="name">Course Name: </label>
-                <input type="text" name="name" id="name" placeholder="Course Name" required/>
-            <label for="courseid">Course Id: </label>
-                <input type="text" name="courseId" id="courseId" placeholder="Course Id" required/>
-             <label for="credits">Course Credits: </label>
-                <input type="text" name="credits" pattern="\d+" min="1" max="3" id="credits" placeholder="Course Credits" required/>
-             <label for="professorName">Professor Name: </label>
-                <input type="text" name="professorName" id="professorName" placeholder="Professor Name" required/>
-             <label for="professorEmail">Professor email: </label>
-                <input type="text" name="professorEmail" id="professorEmail" placeholder="Professor email" required/>
-              <label for="taName">TA Name: </label>
-                <input type="text" name="taName" id="taName" placeholder="TA Name" required/>
-             <label for="taEmail">TA Email: </label>
-                <input type="text" name="taEmail" id="taEmail" placeholder="TA Email" required/>
-               <input type="submit" value="Add Course" class="btn" />
+            <input type="text" name="name" id="name" placeholder="Course Name">
+            <span id="nameError" class="error"></span>
+            <label for="courseId">Course Id: </label>
+            <input type="text" name="courseId" id="courseId" placeholder="Course Id">
+            <span id="courseIdError" class="error"></span>
+            <label for="credits">Course Credits: </label>
+            <input type="number" name="credits" id="credits"
+                placeholder="Course Credits between 1 and 3">
+            <span id="creditsError" class="error"></span>
+            <label for="professorName">Professor Name: </label>
+            <input type="text" name="professorName" id="professorName" placeholder="Professor Name">
+            <span id="professorNameError" class="error"></span>
+            <label for="professorEmail">Professor email: </label>
+            <input type="text" name="professorEmail" id="professorEmail" placeholder="Professor email">
+            <span id="professorEmailError" class="error"></span>
+            <label for="taName">TA Name: </label>
+            <input type="text" name="taName" id="taName" placeholder="TA Name">
+            <span id="taNameError" class="error"></span>
+            <label for="taEmail">TA Email: </label>
+            <input type="text" name="taEmail" id="taEmail" placeholder="TA Email">
+            <span id="taEmailError" class="error"></span>
+            <input type="submit" value="Add Course" class="btn">
         </form>
     </div>
+          <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        </script>
+    <script src="/public/javascript/addCourse.js"></script>
+
 </main>

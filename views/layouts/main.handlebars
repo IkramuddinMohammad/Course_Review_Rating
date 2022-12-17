@@ -7,30 +7,29 @@
     <title>Course Review Rating</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../../public/images/favicon.jpeg">
     <link rel="stylesheet" type="text/css" href="../../public/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Monstserrat|Mukta&amp;display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
             <nav>
-                <li><a href="/">Home</a></li>
-                <li><a href="/courses">Courses</a></li>
+               <a href="/">Home</a>
+                <a href="/courses">Courses</a>
                 {{#if studentLoggedIn}}
-                <li><a href="/students/profile" id="profile">Profile</a></li>
-                <li><a href="/students/logout" id="logout">Logout</a></li>
+               <a href="/students/profile" id="profile">Profile</a>
+                <a href="/students/logout" id="studentLogout">Logout</a>
                 {{else if adminLoggedIn}}
-                <li><a href="/courses/add" id="addCourse">Add course</a></li>
-                <li><a href="/students/logout" id="logout">Logout</a></li>
+                <a href="/courses/add" id="addCourse">Add course</a>
+                <a href="/students/logout" id="adminLogout">Logout</a>
                 {{else}}
-                <li><a href="/students/login" id="login">Login</a></li>
-                <li><a href="/courses/admin" id="admin">Admin</a></li>
+               <a href="/students/login" id="login">Login</a>
+                <a href="/courses/admin" id="admin">Admin</a>
                 {{/if}}
             </nav>
     </header>
-    {{{ body }}}
+  {{{body}}}
     <footer>
         <nav>
-            <li><a href="/courses/contactus" id="contact-us">Contact-US</a></li>
+            <a href="/courses/contactus" id="contact-us">Contact-US</a>
         </nav>
     </footer>
 </body>

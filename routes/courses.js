@@ -101,7 +101,7 @@ router.route("/:id/edit")
       let id = req.params.id;
       let name = req.body.name;
       let courseId = req.body.courseId;
-      let credits = Number(req.body.credits);
+      let credits = req.body.credits;
       let professorName = req.body.professorName;
       let professorEmail = req.body.professorEmail;
       let taName = req.body.taName;

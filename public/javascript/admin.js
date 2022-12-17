@@ -1,5 +1,5 @@
 (function ($) {
-  const $form = document.getElementById('adminlogin');
+  const $form = document.getElementById('adminlogin-form');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
   const emailError = document.getElementById('emailError');
@@ -18,7 +18,8 @@
       return false;
     return true
   };
-  $form.addEventListener("submit", function (event) {
+  if($form){
+  $form.addEventListener("submit", function admin(event) {
     event.preventDefault();
     $(".error-msg").hide();
     var valid = false;
@@ -27,27 +28,27 @@
     if (emailVal.trim().length == 0) {
       emailError.style.display = "block";
       emailError.innerHTML = "Please enter email"
-      emailError.show().fadeOut(5000);
+      emailError.show().fadeOut(12000);
       valid = true;
     } else if (!validateEmail(emailVal)) {
       emailError.style.display = "block";
       emailError.innerHTML = "Please enter valid email"
-      emailError.show().fadeOut(5000);
+      emailError.show().fadeOut(12000);
       valid = true;
     }
 
     if (passwordVal.trim().length == 0) {
       passwordError.style.display = "block";
       passwordError.innerHTML = "Please enter password"
-      passwordError.show().fadeOut(5000);
+      passwordError.show().fadeOut(12000);
       valid = true;
     } else if (passwordVal.length < 8) {
       passwordError.innerHTML = "Password should be atleast 8 characters long"
-      passwordError.show().fadeOut(5000);
+      passwordError.show().fadeOut(12000);
       valid = true;
     } else if (!validatePassword(passwordVal)) {
       passwordError.innerHTML = "Password should contain one uppercase, one lower case, one special character and one number"
-      passwordError.show().fadeOut(5000);
+      passwordError.show().fadeOut(12000);
       valid = true;
     }
 
@@ -78,4 +79,5 @@
       },
     });
   });
+}
 })(window.jQuery);

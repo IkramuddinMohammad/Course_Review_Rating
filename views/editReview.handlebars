@@ -1,15 +1,14 @@
 <main>
     <div class="container-widemode" id="right">
         <h2>Edit Review</h2>
-        <form if="edit-review" action="/reviews/{{reviewId}}/edit" method="post">
+        <form action="/reviews/{{reviewId}}/edit" method="post">
             <label for="semesterVal">Semester</label>
                 <input type="text" id="semesterVal" name="semesterVal" value="{{semesterVal}}" readonly>
             <label for="rating">Rating</label>
-                <input type="number" pattern="\d+" min="1" max="5" id="rating" name="rating" value="{{rating}}" required>
+                <input type="number" id="rating" name="rating" value="{{rating}}" required>
             <label for="reviewData">Review Text</label>
                 <input type="text" id="reviewData" name="reviewData" value="{{reviewData}}" required>  
             <button type="submit" class="btn">Submit</button>
         </form>
     </div>
-    
 </main> 

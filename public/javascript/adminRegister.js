@@ -24,8 +24,6 @@
  if($form){
   $form.addEventListener("submit", function adminregister(event) { 
     event.preventDefault();
-    error.style.display = "none"
-    error.innerHTML = "";
     var valid = false;
     var passcodeVal = passcode.value.replace(/\s/g, "");
     var emailVal = email.value.replace(/\s/g, "");

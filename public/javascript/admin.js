@@ -22,7 +22,6 @@
   if($form){
     $form.addEventListener("submit", function admin(event) {
     event.preventDefault();
-    $(".error-msg").hide();
     var valid = false;
     var emailVal = email.value;
     var passwordVal = password.value;

@@ -27,8 +27,6 @@
  if($form){
   $form.addEventListener("submit", function register(event) { 
     event.preventDefault();
-    error.style.display = "none"
-    error.innerHTML = "";
     var valid = false;
     var firstNameVal = firstName.value.replace(/\s/g, "");
     var lastNameVal = lastName.value.replace(/\s/g, "");

@@ -4,7 +4,8 @@
   const password = document.getElementById('password');
   const emailError = document.getElementById('emailError');
   const passwordError = document.getElementById('passwordError');
-  const error = document.getElementById('error-msg');
+  const error = document.getElementById('error_msg');
+  
   let validateEmail = (email) => {
     const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(email))
@@ -21,8 +22,6 @@
   if($form){
     $form.addEventListener("submit", function login(event) {
     event.preventDefault();
-    error.style.display = "none"
-    error.innerHTML = "";
     var valid = false;
     var emailVal = email.value;
     var passwordVal = password.value;

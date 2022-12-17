@@ -5,21 +5,19 @@
             <label for="name">Course Name: </label>
                 <input type="text" name="name" id="name" value="{{course.name}}" placeholder="Course Name" readonly />
             <label for="courseid">Course Id: </label>
-                <input type="text" name="courseId" id="courseId" value="{{course.courseId}}" placeholder="Course Id"
-                readonly />
+                <input type="text" name="courseId" id="courseId" value="{{course.courseId}}" placeholder="Course Id" readonly />
             <label for="credits">Course Credits: </label>
-                <input type="number" name="credits" id="credits" value="{{course.credits}}" placeholder="Course Credits"
-                readonly />
+                <input type="number" name="credits" id="credits" value="{{course.credits}}" placeholder="Course Credits" readonly />
             <label for="professorName">Professor Name: </label>
             <span id="professorNameError" class="error"></span>
-                <input type="text" name="professorName" id="professorName" value="{{course.professorName}}"
+                <input type="text" name="professorName" id="professorName" minlength="4" maxlength="10" value="{{course.professorName}}"
                 placeholder="Professor Name">
             <label for="professorEmail">Professor email: </label>
                 <input type="text" name="professorEmail" id="professorEmail" value="{{course.professorEmail}}"
                 placeholder="Professor email">
                 <span id="professorEmailError" class="error"></span>
             <label for="taName">TA Name: </label>
-                <input type="text" name="taName" id="taName" value="{{course.taName}}" placeholder="TA Name">
+                <input type="text" name="taName" id="taName" minlength="4" maxlength="10" value="{{course.taName}}" placeholder="TA Name">
                 <span id="taNameError" class="error"></span>
             <label for="taEmail">TA Email: </label>
                 <input type="text" name="taEmail" id="taEmail" value="{{course.taEmail}}" placeholder="TA Email">

@@ -35,9 +35,10 @@
                 <h4>Comments</h4>
                 <div class="comments">
                     {{#if ../studentLoggedIn}}
-                    <form id="comment-form" name="commentForm" class="form-container" action="/comments/{{../currentStudentsData._id}}/{{this._id}}/{{this.courseId}}/add" method="POST">
-                        <label>
-                            <input type="textarea" name="commentValue" id="commentValue" placeholder="comment" rows="3" required />
+                    <form id="comment_form" name="commentForm" class="form-container" action="/comments/{{../currentStudentsData._id}}/{{this._id}}/{{this.courseId}}/add" method="POST">
+                        <label for="commentValue">
+                            <input class="comment_text" type="textarea" name="commentValue" id="commentValue" placeholder="comment" rows="3" />
+                            <span id="commentValueError" class="error"></span>
                         </label>
                         <button type="submit" class="btn">Submit</button>
                     </form>
@@ -88,11 +89,13 @@
                     <option name="fall2021" value="fall2021">Fall 2021</option>
                 </select>
             </p>
-            <label>
+            <label for="rating">
                 <input type="number" name="rating" id="rating" placeholder="Enter your Rating">
+                 <span id="ratingError" class="error"></span>
             </label>
-            <label>
+            <label for="reviewText">
                 <input type="text" name="reviewText" id="reviewText" placeholder="Enter your Review">
+                <span id="reviewTextError" class="error"></span>
             </label>
             <button type="submit" class="btn">Add Review</button>
             <button type="button" class="btn cancel" onclick="closecreateReview()">Cancel</button>
@@ -139,4 +142,8 @@
             document.getElementsByClassName("add_review_btn")[0].style.display = "block"
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        </script>
+    <script src="/public/javascript/course.js"></script>
 </main>

@@ -91,6 +91,9 @@ input{
     border-radius: 5px;
     padding: 5px 10px;
 }
+.comment_text{
+    width: 50%;
+}
 label{
     display: inline-block;
 }

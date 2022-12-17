@@ -35,7 +35,7 @@ router.post("/:id/add", async (req, res) => {
   let rating = Number(req.body.rating);
   let reviewText = req.body.reviewText;
   let semesterVal = req.body.selectSemester
-  let studentId = sessionValidate.studentLoggedIn;
+  let studentId = sessionValidate.studentId;
   try {
     id = await validate.validateId("Post Add", id, "id");
   } catch (error) {

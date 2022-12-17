@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const configRoutes = require('./routes');
 const static = express.static(__dirname + '/public');
+const adminCookieString = "AdminCookie"
 
 app.use(cookieParser());
 app.use(cors());
@@ -33,30 +34,32 @@ app.use(function(request, response, next) {
   next();
   if(request.session) {
     if(!request.session.AuthCookie) {
-      console.log("Students is not Authenticated yet!")
+      console.log("Student/Admin is not Authenticated yet!")
     }
-    else {
-      console.log("Students is Authenticated!");
-    } 
+    else if(request.session.AuthCookie === adminCookieString) {
+      console.log("Admin is Authenticated!");
+    } else{
+      console.log("Student is Authenticated!");
+    }
   } else {
     if(request.originalUrl == '/logout')
-      console.log('Students has been logged out!');
+      console.log('Students/Admin has been logged out!');
     else
-      console.log("Students is not Authenticated yet!")
+      console.log("Students/Admin is not Authenticated yet!")
   }
-  console.log("---------------------------------------------------")
+  console.log("==========================================")
 });
 
-app.use("/profile", function(req, res, next){
-    if(!req.session.AuthCookie) {
-      let isErrors = true;
-      let errors = [];
-      errors.push("Not Logged In, Please Login");
-      res.status(403).render("layouts/main", {isErrors:isErrors, errors: errors});
-    } else {
-      next();
-    }
-  });
+// app.use("/profile", function(req, res, next){
+//     if(!req.session.AuthCookie) {
+//       let isErrors = true;
+//       let errors = [];
+//       errors.push("Not Logged In, Please Login");
+//       res.status(403).render("layouts/main", {isErrors:isErrors, errors: errors});
+//     } else {
+//       next();
+//     }
+// });
 
 configRoutes(app);
 

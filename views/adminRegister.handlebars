@@ -1,0 +1,36 @@
+<main>
+  <div class="loginPage" id="adminregister-details">
+    <h2>please register with your admin email and also enter the passcode</h2>
+    <form class="registerForm" id="adminregister_form" name="RegisterForm" action="/students/register" method="POST">
+      <div class="group">
+        <label for="email">
+          <input type="text" name="email" id="email" placeholder="Enter your Email"/>
+        </label>
+        <span id="emailError" class="error"></span>
+      </div>
+      <div class="group">
+        <label for="password">
+        <input type="password" id="password" name="password" minlength="8" placeholder="Enter a Password"required/>
+        </label>
+         <span id="passwordError" class="error"></span>
+      </div>
+       <div class="group">
+        <label for="passcode">
+        <input type="text" id="passcode" name="passcode" minlength="8" placeholder="Enter a Passcode" required/>
+        </label>
+         <span id="passcodeError" class="error"></span>
+      </div>
+      <div class="group">
+        <button type="submit" class="btn">Register</button>
+      </div>  
+    </form>
+  </div>
+
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"
+  >
+  </script>
+  <script src="/public/javascript/adminregister.js"></script>
+</main>

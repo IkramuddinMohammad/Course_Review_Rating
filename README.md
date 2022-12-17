@@ -12,6 +12,7 @@ In the terminal, navigate to the directory containing app.js, and run the follow
   email: donald@stevens.edu
   password: Donald@123  
 
+  Admin Passcode: "onlyforadmin"
   Admin Login Details:
   email: admin@gmail.edu
   password: Admin@123  

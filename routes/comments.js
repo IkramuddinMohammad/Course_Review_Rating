@@ -38,7 +38,7 @@ router.post('/:studentId/:reviewId/:courseId/add', async (req, res) => {
     return res.status(400).render("error",{error: error});
   }
   try {
-    coomentData = await comments.createComment(studentId, reviewId, commentVal)
+    coomentData = await comments.createComment(courseId, studentId, reviewId, commentVal)
     if (coomentData) return res.redirect("/courses/" + courseId);
     else return res.status(404).send();
   } catch (error) {

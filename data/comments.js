@@ -5,18 +5,21 @@ const validate = require('../helper');
 const { ObjectId } = require('mongodb');
 
 module.exports = {
-    async createComment(studentId, reviewId, commentInput) {
+    async createComment(courseId, studentId, reviewId, commentInput) {
+        courseId = await validate.validateId("createComment", courseId, "courseId");
         studentId = await validate.validateId("createComment", studentId, "studentId");
         reviewId = await validate.validateId("createComment", reviewId, "validateId");
         commentInput = await validate.validateString("createComment", commentInput, "commentInput")
         const commentCollection = await comments();
+        const commented = await commentCollection.findOne({ courseId: courseId, studentId: studentId });
         let addNewComment = {
+            courseId: courseId,
             studentId: studentId,
             reviewId: reviewId,
             commentInput: commentInput
         }
+
         const insertInfo = await commentCollection.insertOne(addNewComment);
-        
         const reviewCollection = await reviews();
 
         if (!insertInfo.acknowledged || !insertInfo.insertedId) {

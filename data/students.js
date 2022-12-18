@@ -68,18 +68,28 @@ module.exports = {
     async updateProfile(id, courseTaken) {
         id = validate.validateId("updateProfile", id, "review Id");
         courseTaken = validate.validateString("updateProfile", courseTaken, "courseTaken")
-        const studentColection = await students();
-        const updatedprofile = {};
-        updateStudentData = await studentColection.updateOne({
-            _id: ObjectId(id)
-        }, {
-            $push: {
-            coursesList: courseTaken
+        const studentCollection = await students();
+        const studentDataInfo = await this.getStudents(id);
+
+        if(studentDataInfo){
+            for(let i=0; i<studentDataInfo.coursesList.length;i++){
+                console.log("testt",studentDataInfo.coursesList[i],courseTaken)
+                if(studentDataInfo.coursesList[i] === courseTaken){
+                    throw `Already ${courseTaken} is registered before`
+                }
             }
-        });
+                updateStudentData = await studentCollection.updateOne({
+                    _id: ObjectId(id)
+                }, {
+                    $push: {
+                    coursesList: courseTaken
+                    }
+                });
+                
+                if (!updateStudentData.matchedCount && !updateStudentData.modifiedCount) throw "updateProfile: Update of student profile failed";
+                return await this.getStudents(id); 
+        }
         
-        if (!updateStudentData.matchedCount && !updateStudentData.modifiedCount) throw "updateProfile: Update of student profile failed";
-        return await this.getStudents(id);
     },
 
     async checkStudent(email, password) {

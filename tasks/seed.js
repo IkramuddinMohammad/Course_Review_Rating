@@ -118,7 +118,6 @@ const main = async () => {
     const admin = await courses.addAdmin("onlyforadmin","admin@gmail.com", "Admin@123");
 
     console.log('Done seeding database for course Collection!');
-    db.close()
 };
 
 main().catch(error => {

@@ -108,6 +108,12 @@ label{
     margin-bottom: 10px;
     color: rgb(255, 0, 0);
     font-size: 14px;
+    overflow-wrap: break-word;
+  }
+  .error-msg{
+    margin-bottom: 10px;
+    color: rgb(255, 0, 0);
+    font-size: 14px;
   }
 .reviews{
     text-align: center;
@@ -156,8 +162,9 @@ label{
     border: 2px solid #0076cb;
     border-radius: 5em;
     padding: 8px;
-    margin: 15px;
+    margin: 20px;
     text-align: center;
+    
 }
 
 .btn:hover {
@@ -233,7 +240,7 @@ label{
 }
 .container {
     padding: 1%; 
-    width: 500px;
+    width: 600px;
     height: auto;
     z-index: 15;
     top: 30%;

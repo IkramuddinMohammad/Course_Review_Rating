@@ -335,3 +335,26 @@ label{
 #courseTaken {
     width: 50%;
  }
+
+ .faq-button {
+    background-color: #767676;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 13px;
+  }
+  
+  .active, .faq-button:hover {
+    background-color: rgb(105, 103, 103);
+  }
+  
+  .open-faq {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f8f1f1;
+  }

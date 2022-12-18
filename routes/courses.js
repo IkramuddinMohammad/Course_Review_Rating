@@ -431,6 +431,7 @@ router.get("/:id", async (req, res) => {
         }
         review.commentList = listOfComments;
         if (studentId !== review.studentId) {
+          
           review.isStudentReviewer = true;
           studentReviewLoggedIn = true;
         } else {
@@ -450,6 +451,17 @@ router.get("/:id", async (req, res) => {
 
     if (sessionValidate.studentLoggedIn) {
       studentData = await students.getStudents(studentId);
+          if(studentData.coursesList){
+            let getStuCourseList = studentData.coursesList
+            for(let i=0; i<getStuCourseList.length; i++){
+              if(course.courseId.toString() === getStuCourseList[i].toString()){
+                studentData.reviewbtnEnable =true
+              }else{
+                studentData.reviewbtnEnable =false
+              }
+            }
+          }
+          console.log(studentData.reviewbtnEnable)
       studentData.reviewedcoursePage = listOfReviews.some(rev => rev.studentId === studentData._id.toString());
     }
     course = await courses.getCourse(id);

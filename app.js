@@ -28,7 +28,7 @@ app.set('view engine', 'handlebars');
 
 
 app.use(function(request, response, next) {
-  console.log('Timestamp ' + new Date().toUTCString());
+  console.log('Timestamp ' + new Date().toLocaleString());
   console.log('Request Method: ' + request.method);
   console.log('Request Routes: ' + request.originalUrl);
   next();

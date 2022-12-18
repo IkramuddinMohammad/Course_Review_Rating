@@ -23,16 +23,16 @@ const main = async () => {
     const C10 = await courses.createCourse("Web Programming", "CS 546", 3, "Patrick Hill",  "patrick@stevens.edu", "Aditya Kapoor", "aditya@stevens.edu");
    
     //Seed Sample Students
-    const S1 = await students.createStudents("Donald", "Brown", "donald@stevens.edu", "Donald@123");
-    const S2 = await students.createStudents("Kartik", "Shah", "kartik@stevens.edu", "Kartik@123");
-    const S3 = await students.createStudents("Michael", "Trump", "michael@stevens.edu", "Michael@123");
-    const S4 = await students.createStudents("Sanjeev", "Bhatt", "sanjeev@stevens.edu", "Sanjeev@123");
-    const S5 = await students.createStudents("Danny", "Sussan", "dann@stevens.edu", "Dann@123");
-    const S6 = await students.createStudents("Miles", "Tartaglia", "miles@stevens.edu","Mile@123");
-    const S7 = await students.createStudents("John", "Rosenberg", "john@stevens.edu", "John@123");
-    const S8 = await students.createStudents("Jessica", "Doen", "jessica@stevens.edu", "Jessica@123");
-    const S9 = await students.createStudents("Kamil", "Pelis", "kamil@stevens.edu", "Kamil@123");
-    const S10 = await students.createStudents("Alice", "Smith", "alice@stevens.edu", "Alice@123");
+    const S1 = await students.createStudents("Donald", "Brown", "donald@stevens.edu", "Donald@123", ["CS 501", "CS 516"]);
+    const S2 = await students.createStudents("Kartik", "Shah", "kartik@stevens.edu", "Kartik@123", ["CS 501", "CS 516"]);
+    const S3 = await students.createStudents("Michael", "Trump", "michael@stevens.edu", "Michael@123", ["CS 515", "CS 521"]);
+    const S4 = await students.createStudents("Sanjeev", "Bhatt", "sanjeev@stevens.edu", "Sanjeev@123", ["CS 515", "CS 521"]);
+    const S5 = await students.createStudents("Danny", "Sussan", "dann@stevens.edu", "Dann@123", ["CS 551", "CS 526"]);
+    const S6 = await students.createStudents("Miles", "Tartaglia", "miles@stevens.edu","Mile@123", ["CS 551", "CS 526"]);
+    const S7 = await students.createStudents("John", "Rosenberg", "john@stevens.edu", "John@123", ["CS 590", "CS 537"]);
+    const S8 = await students.createStudents("Jessica", "Doen", "jessica@stevens.edu", "Jessica@123", ["CS 590", "CS 537"]);
+    const S9 = await students.createStudents("Kamil", "Pelis", "kamil@stevens.edu", "Kamil@123", ["CS 510", "CS 546"]);
+    const S10 = await students.createStudents("Alice", "Smith", "alice@stevens.edu", "Alice@123", ["CS 510", "CS 546"]);
 
     //Seed Sample Reviews
     const r1c1 = await reviews.createReview(String(C1._id), String(S1._id), "fall2022", 4, "Concepts are easy to understand");
@@ -67,7 +67,7 @@ const main = async () => {
     const c1r2c4 = await comments.createComment(String(C4._id), String(S7._id), String(r2c4._id), "The course very easy to understand");
     const c2r2c4 = await comments.createComment(String(C4._id), String(S9._id), String(r2c4._id), "Easy to understand the concepts");
     
-    const r1c5 = await reviews.createReview(String(C5._id), String(S8._id), "spring2022", 4, "Concepts are easy to understand");
+    const r1c5 = await reviews.createReview(String(C5._id), String(S9._id), "spring2022", 4, "Concepts are easy to understand");
     const c1r1c5 = await comments.createComment(String(C5._id), String(S10._id), String(r1c5._id), "The course very easy to understand");
     const c2r1c5 = await comments.createComment(String(C5._id), String(S1._id), String(r1c5._id), "Easy to understand the concepts");
 
@@ -107,7 +107,7 @@ const main = async () => {
     const c1r2c9 = await comments.createComment(String(C9._id), String(S7._id), String(r2c9._id), "The course very easy to understand");
     const c2r2c9 = await comments.createComment(String(C9._id), String(S9._id), String(r2c9._id), "Easy to understand the concepts");
     
-    const r1c10 = await reviews.createReview(String(C10._id), String(S8._id), "fall2022", 4, "Concepts are easy to understand");
+    const r1c10 = await reviews.createReview(String(C10._id), String(S9._id), "fall2022", 4, "Concepts are easy to understand");
     const c1r1c10 = await comments.createComment(String(C10._id), String(S10._id), String(r1c10._id), "The course very easy to understand");
     const c2r1c10 = await comments.createComment(String(C10._id), String(S1._id), String(r1c10._id), "Easy to understand the concepts");
 

@@ -61,13 +61,18 @@
         <button class="add_review_btn" onclick="location.href='../courses/{{course._id}}/edit';">Edit course</button>
     {{else if studentLoggedIn}}
     {{#if currentStudentsData.reviewedcoursePage}}
-        <button id="reviewed_popup" class="add_review_btn" onclick="openAlert()">Add a Review</button>
+        <button id="reviewed_popup" class="add_review_btn" onclick="location.href='../students/profile';">Edit Review</button>
     {{else}}
+    {{#if currentStudentsData.reviewbtnEnable}}
         <button id="check_review_popup" class="add_review_btn" onclick="openCheckAlert()">Add a Review</button>
+    {{else}}
+         <button id="check_review_popup" class="add_review_btn" onclick="openAlert()">Add a Review</button>
+    {{/if}}
     {{/if}}
     {{else}}
         <button class="add_review_btn" onclick="location.href='../students/login';">Add a Review</button>
     {{/if}}
+    
     <div class="popup_window" id="opencheck_form">
         <h2>Have you completed the course or registered in the course already?</h2>
         <form id="taken_form" class="form-container" action="javascript:void(0);">
@@ -105,8 +110,7 @@
         </form>
     </div>
     <div class="popup_window" id="openalert_form">
-        <p>You have already added a Review!</p>
-        <p>You can edit your Review in your Profile</p>
+        <p>You have not registered in the course!</p>
         <form id="review-edit_form" name="review-edit_form" class="form-container" action="javascript:void(0);">
             <button type="button" class="btn cancel" onclick="closeAlert()">Close</button>
         </form>
@@ -115,6 +119,14 @@
         <p class="error-msg"></p>
     </div>
     <script>
+         function openAlert() {
+            document.getElementById("openalert_form").style.display = "block";
+            document.getElementsByClassName("add_review_btn")[0].style.display = "none"
+        }
+        function closeAlert() {
+            document.getElementById("openalert_form").style.display = "none";
+            document.getElementsByClassName("add_review_btn")[0].style.display = "block"
+        }
         function opencreateReview() {
             document.getElementById("openadd_form").style.display = "block";
             document.getElementById("opencheck_form").style.display = "none";
@@ -124,10 +136,7 @@
             document.getElementById("opencheck_form").style.display = "block";
             document.getElementsByClassName("add_review_btn")[0].style.display = "none"
         }
-        function openAlert() {
-            document.getElementById("openalert_form").style.display = "block";
-            document.getElementsByClassName("add_review_btn")[0].style.display = "none"
-        }
+        
         function closeCheckAlert() {
             document.getElementById("closecheck_form").style.display = "block";
             document.getElementById("opencheck_form").style.display = "none";
@@ -141,10 +150,7 @@
             document.getElementById("openadd_form").style.display = "none";
             document.getElementsByClassName("add_review_btn")[0].style.display = "block"
         }
-        function closeAlert() {
-            document.getElementById("openalert_form").style.display = "none";
-            document.getElementsByClassName("add_review_btn")[0].style.display = "block"
-        }
+        
         function reviewValidate(form) {
             const ratingError = document.getElementById('ratingError');
             const reviewTextError = document.getElementById('reviewTextError');

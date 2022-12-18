@@ -1,8 +1,10 @@
 const express = require("express");
+const mongoCollections = require("../config/mongoCollections");
 const router = express.Router();
 const data = require('../data');
 const validate = require('../helper');
 const students = data.students;
+const cour = mongoCollections.courses;
 const courses = data.courses;
 const reviews = data.reviews;
 const xss = require('xss');
@@ -72,11 +74,25 @@ router.route('/register')
     let lastName = req.body.lastname;
     let email = req.body.email
     let password = req.body.password;
+    let coursesList = req.body.courseTaken;
+
     try {
       firstName = await validate.validateName("Post Register", firstName, "First Name");
     } catch (error) {
       return res.status(400).render("register", { error: error });
     }
+try{
+    if(coursesList){
+      for(let i =0; i<coursesList.length; i++){
+        coursesList[i] = await validate.validateName("Post Register", coursesList[i], "course Id"+i);
+        
+      }
+    } else{
+      return res.status(400).render("register", { error: "courses are empty" });
+    }
+  }catch(e){
+    return res.status(400).render("register", { error: e });
+  }
     try {
       lastName = await validate.validateName("Post Register", lastName, "Last Name");
     } catch (error) {
@@ -93,7 +109,14 @@ router.route('/register')
       return res.status(400).render("register", { error: error });
     }
     try {
-      const studentData = await students.createStudents(xss(firstName), xss(lastName), xss(email), xss(password));
+      const courseCollection =  await cour();
+      for(let i =0; i<coursesList.length; i++){
+        let getCourse = await courseCollection.findOne({ courseId: coursesList[i].toString()}); 
+        if(!getCourse){
+          return res.status(400).send(`No courses with the course id ${coursesList[i]}`) 
+        }
+      }
+      const studentData = await students.createStudents(xss(firstName), xss(lastName), xss(email), xss(password), coursesList);
       if (studentData) res.status(200).send({result: 'redirect', url:'/students/login'});
       else {
         return res.status(500).send("Internal Server Error!");
@@ -101,7 +124,6 @@ router.route('/register')
     } catch (error) {
       return res.status(400).send(error);
     }
-
   });
 
 router.get("/myprofile", async (req, res) => {

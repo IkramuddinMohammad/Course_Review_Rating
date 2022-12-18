@@ -9,8 +9,15 @@
   const emailError = document.getElementById('emailError');
   const passwordError = document.getElementById('passwordError');
   const error = document.getElementById('error-msg')
-
-
+  var totalCourse = document.getElementById('total_course')
+  let courses = [];
+  let coursesError = []
+  for(let i=0; i<totalCourse.value; i++){
+    let j = i+1
+    courses[i] = document.getElementById("coursetaken"+j);
+    coursesError[i] = document.getElementById("coursetaken"+j+"Error");
+  }
+ 
   let validateEmail = (email) => {
     const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailRegex.test(email))
@@ -39,7 +46,23 @@
         $("#firstnameError").show().fadeOut(12000);
         valid = true
       }
-
+      let courseVal = []
+      if(courses.length>0){
+        for(let i=0;i<courses.length;i++){
+          courseVal[i] = courses[i].value.toString()
+          if (courseVal[i].replace(/\s/g, "") == 0) {
+            coursesError[i].style.display = "block";
+            coursesError[i].innerHTML = "Please enter courseid"
+            $("#coursetaken"+i+"Error").show().fadeOut(12000);
+            valid = true
+          }
+        }
+      }else{
+            $("#coursesError1").innerHTML = "Please enter courseid"
+            $("#coursetaken1Error").show().fadeOut(12000);
+            valid = true
+      }
+      
       if (lastNameVal.length == 0) {
         lastnameError.style.display = "block";
         lastnameError.innerHTML = "Please enter lastname"
@@ -84,8 +107,6 @@
         emailError.style.display = "none";
         passwordError.style.display = "none";
       }
-
-
       $.ajax({
         type: "Post",
         url: "/students/register",
@@ -94,12 +115,12 @@
           firstname: firstNameVal,
           lastname: lastNameVal,
           email: emailVal,
-          password: passwordVal
+          password: passwordVal,
+          courseTaken: courseVal
         }),
         dataType: "text",
         success: function (data) {
-          window.location.protocol
-          window.location.replace(window.location.protocol+window.location.host+data.url);
+           window.location.replace("/");
         },
          error: function (r) {
           error.innerHTML= r.responseText;

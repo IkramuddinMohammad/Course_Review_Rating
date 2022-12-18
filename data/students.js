@@ -6,11 +6,21 @@ const saltRounds = 16;
 const { ObjectId } = require('mongodb');
 
 module.exports = {
-    async createStudents(firstName, lastName, email, password) {
+    async createStudents(firstName, lastName, email, password, coursesList) {
         firstName = validate.validateName("createStudents", firstName, "First Name");
         lastName = validate.validateName("createStudents", lastName, "Last Name");
         email = validate.validateEmail("createStudents", email, "Email");
         password = validate.validatePassword("createStudents", password);
+        if(!Array.isArray(coursesList)){
+            throw "coursesList is not array format"
+        }
+        if(coursesList){
+            for(let i =0; i<coursesList.length; i++){
+              coursesList[i] = await validate.validateName("createStudents", coursesList[i], "course Id"+i);
+            }
+          } else{
+            throw "CreateStudents: Courses are empty"
+          }
         const studentCollection = await students();
         email = email.toLowerCase();
         const student = await studentCollection.findOne({ email: email });
@@ -21,6 +31,7 @@ module.exports = {
                 lastName: lastName,
                 email: email,
                 hashedPassword: passwordHash,
+                coursesList: coursesList,
                 reviews: [],
                 comments: []
             }

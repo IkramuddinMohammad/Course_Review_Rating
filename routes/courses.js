@@ -77,7 +77,7 @@ router.get("/", async (req, res) => {
     for (let c of courseList) {
       const aggRating = reviewCollection.aggregate([{ $group: { _id: "$courseId", rating: { $avg: "$rating" } } }])
       for await (const doc of aggRating) {
-        const updated = await coursCollection.updateOne({ _id: c._id }, { $set: { rating: (doc.rating).toFixed(2) } });
+        const updated = await coursCollection.updateOne({ _id: c._id }, { $set: { rating: (doc.rating).toFixed(1) } });
         if (!updated.matchedCount && !updated.modifiedCount) res.status(500).json({ error: "Could not update rating" });
       }
     }
@@ -405,7 +405,7 @@ router.get("/:id", async (req, res) => {
         var result = validate.semsterValue(d._id.semsterval);
         semsterValu.push({
           val: result,
-          semrat: (d.avgRating).toFixed(2)
+          semrat: (d.avgRating).toFixed(1)
         })
       }
     }
@@ -431,7 +431,6 @@ router.get("/:id", async (req, res) => {
         }
         review.commentList = listOfComments;
         if (studentId !== review.studentId) {
-          
           review.isStudentReviewer = true;
           studentReviewLoggedIn = true;
         } else {

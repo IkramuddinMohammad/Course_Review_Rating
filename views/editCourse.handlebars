@@ -1,6 +1,6 @@
 <main>
     <div class="container">
-        <h1>Edit course</h1>
+        <h2>Edit course</h2>
         <form method="POST" id="editcourse_form" action="/courses/{{course._id}}/edit"
             onsubmit="return validate(this);">
             <label for="name">Course Name: </label>
@@ -12,10 +12,9 @@
             <input type="number" name="credits" id="credits" value="{{course.credits}}" placeholder="Course Credits"
                 readonly>
             <label for="professorName">Professor Name: </label>
-            <span id="professorNameError" class="error"></span>
             <input type="text" name="professorName" id="professorName" minlength="4" value="{{course.professorName}}"
                 placeholder="Professor Name">
-            <label for="professorEmail">Professor email: </label>
+            <span id="professorNameError" class="error"></span>
             <input type="text" name="professorEmail" id="professorEmail" value="{{course.professorEmail}}"
                 placeholder="Professor email">
             <span id="professorEmailError" class="error"></span>

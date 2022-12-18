@@ -1,7 +1,7 @@
 <main>
  
   <div class="container" id="register-details">
-     <h2>please register with your college email</h2>
+     <h1>please register with your college email</h1>
     <form class="registerForm" id="register_form" name="RegisterForm" action="/students/register" method="POST">
       <label for="firstname"></label>
       <input type="text" name="firstname" id="firstname" minlength="4" placeholder="Enter your First Name">
@@ -22,6 +22,7 @@
       <div id="new_course"></div>
       <button onclick="add()">Add</button>
       <button onclick="remove()">remove</button>
+      <label for="total_course"></label>
       <input type="hidden" value="1" id="total_course">
       <button type="submit" class="btn">Register</button>
     </form>

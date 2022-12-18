@@ -49,10 +49,10 @@ h1{
     padding: 1%
 }
 h2{
-    color: #058f78;
+    color: #008c74;
 }
 h3{
-    color: #f78c01;
+    color: #d87900;
 }
 h4{
     color: #a1832f;
@@ -323,7 +323,7 @@ label{
 }
 
 .inline_para {
-    color:  #acb441;
+    color:  #909800;
     float: left;
     margin: 10px;
 }

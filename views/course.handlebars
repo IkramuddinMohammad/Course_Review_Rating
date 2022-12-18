@@ -28,10 +28,10 @@
         {{#each reviews}}
         <div class="reviews">
             <div class="container-fullmode">
-                <p class="inline_para  review_name"><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a></p>
+                <p class="inline_para  review_name">{{this.student.firstName}} {{this.student.lastName}}</p>
                 <p class="semester_val">{{this.semesterVal}}, Rating: {{this.rating}}/5</p>
                 <p class="review_Text">{{this.reviewText}}</p>
-                <h4>Replies</h4>
+                <h3>Replies</h3>
                 <div class="comments">
                     {{#if ../studentLoggedIn}}
                     <form id="comment_form" class="form-container"
@@ -39,7 +39,7 @@
                         onsubmit="return commentValidate(this);" method="POST">
                         <label for="commentValue">
                             <input class="comment_text" type="text" name="commentValue" id="commentValue"
-                                placeholder="Reply here">
+                                placeholder="Comment here">
                             <span id="commentValueError" class="error"></span>
                         </label>
                         <button type="submit" class="btn">Submit</button>
@@ -79,7 +79,7 @@
         </form>
     </div>
     <div class="popup_window" id="openadd_form">
-        <h2>Add a Review</h2>
+        <h1>Add a Review</h1>
         <form id="review_form" action="/reviews/{{course._id}}/add" onsubmit="return reviewValidate(this);"
             method="POST">
             <p> Select semester:

@@ -38,6 +38,8 @@ let validateName = (methodName, name, nameString) => {
   if (!name) throw `${methodName}: ${nameString} should not be empty`;
   if (typeof name !== "string") throw `${methodName}: ${nameString} is not a string`;
   name = name.trim();
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  if(specialChars.test(name)== true) throw `${methodName}: ${nameString} name cannot have special characters`;;
   if (name === "") throw `${methodName}: ${nameString} cannot be blank spaces`;
   return name;
 };

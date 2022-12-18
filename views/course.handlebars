@@ -31,7 +31,7 @@
                 <p class="inline_para  review_name"><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a></p>
                 <p class="semester_val">{{this.semesterVal}}, Rating: {{this.rating}}/5</p>
                 <p class="review_Text">{{this.reviewText}}</p>
-                <h4>Comments</h4>
+                <h4>Replies</h4>
                 <div class="comments">
                     {{#if ../studentLoggedIn}}
                     <form id="comment_form" class="form-container"
@@ -39,7 +39,7 @@
                         onsubmit="return commentValidate(this);" method="POST">
                         <label for="commentValue">
                             <input class="comment_text" type="text" name="commentValue" id="commentValue"
-                                placeholder="comment">
+                                placeholder="Reply here">
                             <span id="commentValueError" class="error"></span>
                         </label>
                         <button type="submit" class="btn">Submit</button>

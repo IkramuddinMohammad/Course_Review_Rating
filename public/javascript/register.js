@@ -99,9 +99,10 @@
         dataType: "text",
         success: function (data) {
           window.location.replace("/");
-        }, error: function (r) {
-          error.style.display = "block"
-          error.innerHTML = r.responseText
+        },
+         error: function (r) {
+          error.innerHTML= r.responseText;
+          error.style.display = "show"
         }
       })
 

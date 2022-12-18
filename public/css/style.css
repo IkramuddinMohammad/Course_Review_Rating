@@ -4,6 +4,7 @@ body{
     height: 100%;
     margin: 0;
     padding-top: 15px; 
+    background-color: #c5c4be;
 }
 main{
     padding-bottom: 12px;
@@ -55,6 +56,7 @@ h3{
 }
 h4{
     color: #a1832f;
+    padding: 1%px
 }
 p{
     text-align: center;
@@ -74,7 +76,7 @@ a:hover{
 
 input{
     display: block;
-    width: 30%;
+    width: 40%;
     color: #000000;
     text-align: center;
     text-align-last: center;
@@ -88,7 +90,16 @@ input{
     padding: 5px 10px;
 }
 .comment_text{
-    width: 50%;
+    width: 100%;
+    border: 2px;
+    background-color: rgba(1, 98, 143, 0.04);
+    border-color: #b9b5b5;
+    padding: 12px 120px;
+    border-style: solid;
+    font-size: large;
+}
+.comments .btn{
+    text-align: right;
 }
 label{
     display: inline-block;
@@ -118,8 +129,14 @@ label{
 .reviews h3{
     text-align: center;
 }
-.reviews p {
-    text-align: center;
+.semester_val{
+    text-align: right;
+}
+.review_Text{
+    text-align: left;
+}
+.review_name{
+    text-align: left;
 }
 
 .login{
@@ -223,12 +240,12 @@ label{
     margin: 1%;
 }
 .loginPage {
+    width:800px;
     background-color: #fafafa;
     box-sizing: border-box;
     display: block;
     text-align: center;
     float: left; 
-    width: 45%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 15px;
@@ -298,7 +315,7 @@ label{
     background-color: rgb(255, 255, 255);
     text-align: center;
     padding: 14px 18px;
-    bottom: 30px;
+    top: 15px;
     right: 30px;
     width: 200px;
   }

@@ -4,7 +4,6 @@ const data = require('../data/');
 const comments = data.comments;
 const validate = require('../helper');
 
-
 router.get('/:id', async (req, res) => {
   sessionValidate = validate.sessionValidation(req.session.AuthCookie)
   try {

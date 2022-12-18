@@ -7,10 +7,10 @@ const validate = require('../helper');
 const { ObjectId } = require('mongodb');
 
 module.exports = {
-    async createReview(courseId, studentId, semesterVal, rating, reviewData) {
+    async createReview(courseId, studentId, semesterVal, rating, reviewText) {
         id = validate.validateId("createReview", studentId, "studentId");
         id = validate.validateId("createReview", courseId, "courseId");
-        reviewData = validate.validateString("createReview", reviewData, "review Data")
+        reviewText = validate.validateString("createReview", reviewText, "review Data")
         rating = validate.validateNumber("createReview", rating, "rating")
         semesterVal = validate.validateString("createReview", semesterVal, "semester")
         if (rating < 1 || rating > 5) throw "createReview: Please choose between 1 and 5";
@@ -23,7 +23,7 @@ module.exports = {
             courseId: courseId,
             studentId: studentId,
             semesterVal: semesterVal,
-            reviewData: reviewData,
+            reviewText: reviewText,
             rating: rating,
             comments: []
         }
@@ -78,16 +78,16 @@ module.exports = {
         return review;
     },
 
-    async updateReview(id, semesterVal, rating, reviewData) {
+    async updateReview(id, semesterVal, rating, reviewText) {
         id = validate.validateId("updateReview", id, "review Id");
-        reviewData = validate.validateString("updateReview", reviewData, "reviewData")
+        reviewText = validate.validateString("updateReview", reviewText, "reviewText")
         semesterVal = validate.validateString("updateReview", semesterVal, "semester Val")
         rating = validate.validateNumber("updateReview", rating, "rating")
         if (rating < 1 || rating > 5) throw "updateReview: Please choose between 1 and 5";
         const reviewCollection = await reviews();
         const updatedReview = {};
         updatedReview.semesterVal = semesterVal;
-        updatedReview.reviewData = reviewData;
+        updatedReview.reviewText = reviewText;
         updatedReview.rating = rating;
         updateReviewData = await reviewCollection.updateOne({
             _id: ObjectId(id)

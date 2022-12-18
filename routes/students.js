@@ -7,14 +7,7 @@ const courses = data.courses;
 const reviews = data.reviews;
 const xss = require('xss');
 
-router
-  .route('/logout')
-  .get(async (req, res) => {
-    res.clearCookie("AuthCookie");
-    req.session.destroy();
-    res.status(200).redirect("/");
-    return;
-  })
+
 
 router
   .route('/login')
@@ -55,7 +48,14 @@ router
       return res.status(400).send(error);
     }
   });
-
+  router
+  .route('/logout')
+  .get(async (req, res) => {
+    res.clearCookie("AuthCookie");
+    req.session.destroy();
+    res.status(200).redirect("/");
+    return;
+  })
 
 router.route('/register')
   .get(async (req, res) => {
@@ -64,9 +64,7 @@ router.route('/register')
       res.status(200).redirect("/students/profile");
     } else {
       let error = "Not Authorized"
-      res.status(400).render("register", {
-        error: error
-      });
+      res.status(400).render("register");
     }
   }).post(async (req, res) => {
     sessionValidate = validate.sessionValidation(req.session.AuthCookie)
@@ -96,7 +94,7 @@ router.route('/register')
     }
     try {
       const studentData = await students.createStudents(xss(firstName), xss(lastName), xss(email), xss(password));
-      if (studentData) res.status(200).redirect("/students/login");
+      if (studentData) res.status(200).send({result: 'redirect', url:'/students/login'});
       else {
         return res.status(500).send("Internal Server Error!");
       }

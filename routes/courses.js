@@ -22,9 +22,7 @@ router.route('/admin/register')
       res.status(200).redirect("/students/profile");
     } else {
       let error = "Not Authorized"
-      res.status(400).render("adminRegister", {
-        error: error
-      });
+      res.status(400).render("adminRegister");
     }
   }).post(async (req, res) => {
     sessionValidate = validate.sessionValidation(req.session.AuthCookie)

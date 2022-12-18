@@ -85,45 +85,11 @@ router.post("/:id/add", async (req, res) => {
 });
 
 router.route("/:id/edit")
-  .get(async (req, res) => {
-    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
-    let id = req.params.id;
-    let studentId = sessionValidate.studentId;
-    try {
-      id = await validate.validateId("Get Edit", id, "id");
-    } catch (error) {
-      return res.status(400).render("error", {
-        error: error,
-        studentLoggedIn: sessionValidate.studentLoggedIn,
-        adminLoggedIn: sessionValidate.adminLoggedIn
-      });
-    }
-    try {
-      const review = await reviews.getReview(id);
-      let semesterVal = review.semesterVal;
-      if (studentId != review.studentId) {
-        return res.redirect("/reviews");
-      } else {
-        res.status(200).render("editReview", {
-          reviewId: id,
-          reviewData: review.reviewData,
-          rating: review.rating,
-          semesterVal: semesterVal,
-          studentLoggedIn: sessionValidate.studentLoggedIn
-        });
-      }
-    } catch (error) {
-      return res.status(404).render("error", {
-        error: error,
-        studentLoggedIn: sessionValidate.studentLoggedIn,
-        adminLoggedIn: sessionValidate.adminLoggedIn
-      });
-    }
-  }).post(async (req, res) => {
+.post(async (req, res) => {
     sessionValidate = validate.sessionValidation(req.session.AuthCookie)
     let id = req.params.id
     let rating = Number(req.body.rating);
-    let reviewData = req.body.reviewData;
+    let reviewText = req.body.reviewText;
     let semesterVal = req.body.semesterVal;
     let studentId = sessionValidate.studentId
     try {
@@ -152,7 +118,7 @@ router.route("/:id/edit")
       });
     }
     try {
-      reviewData = validate.validateString("Post Edit", reviewData, "reviewData");
+      reviewText = validate.validateString("Post Edit", reviewText, "reviewText");
     } catch (error) {
       return res.status(400).render("error", {
         error: error,
@@ -162,7 +128,7 @@ router.route("/:id/edit")
     }
     try {
       const reviewInfo = await reviews.getReview(id);
-      await reviews.updateReview(id, semesterVal, rating, reviewData);
+      await reviews.updateReview(id, semesterVal, rating, reviewText);
       if (studentId === reviewInfo.studentId) {
         isStudentReviewer = true;
       }

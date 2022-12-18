@@ -27,10 +27,9 @@
         {{#each reviews}}
         <div class="reviews">
             <div class="container-fullmode">
-                <p><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a>
-                </p>
-                <p>{{this.semesterVal}}, Rating: {{this.rating}}/5</p>
-                <p>{{this.reviewText}}</p>
+                <p class="inline_para  review_name"><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a></p>
+                <p class="semester_val">{{this.semesterVal}}, Rating: {{this.rating}}/5</p>
+                <p class="review_Text">{{this.reviewText}}</p>
                 <h4>Comments</h4>
                 <div class="comments">
                     {{#if ../studentLoggedIn}}
@@ -58,15 +57,15 @@
         {{/each}}
     </div>
     {{#if adminLoggedIn}}
-    <button class="add_review_btn" onclick="location.href='../courses/{{course._id}}/edit';">Edit course</button>
+        <button class="add_review_btn" onclick="location.href='../courses/{{course._id}}/edit';">Edit course</button>
     {{else if studentLoggedIn}}
     {{#if currentStudentsData.reviewedcoursePage}}
-    <button id="reviewed_popup" class="add_review_btn" onclick="openAlert()">Add a Review</button>
+        <button id="reviewed_popup" class="add_review_btn" onclick="openAlert()">Add a Review</button>
     {{else}}
-    <button id="check_review_popup" class="add_review_btn" onclick="openCheckAlert()">Add a Review</button>
+        <button id="check_review_popup" class="add_review_btn" onclick="openCheckAlert()">Add a Review</button>
     {{/if}}
     {{else}}
-    <button class="add_review_btn" onclick="location.href='../students/login';">Add a Review</button>
+        <button class="add_review_btn" onclick="location.href='../students/login';">Add a Review</button>
     {{/if}}
     <div class="form-popup" id="opencheck_form">
         <h2>Have you completed the course or registered in the course already?</h2>

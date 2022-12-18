@@ -16,19 +16,12 @@
         <div>
             <div class="container-fullmode">
                 <div class="reviewHeading">
-                    <div class="reviewerName">
                         <p class="course_name"><a href="/courses/{{this.course._id}}">{{this.course.name}}</a></p>
-                    </div>
-                    <div class="reviewersemester">
                         <p class="course_rating">Semester: {{this.review.semesterVal}}</a></p>
-                    </div>
-                    <div class="reviewerRating">
                         <p class="course_rating">Your Rating: {{this.review.rating}}</p>
-                    </div>
                 </div>
-                <div class="reviewText">
                     <p>{{this.review.reviewText}}</p>
-                </div>
+         
                 <button id="edit_popup" class="checkbtn" onclick="openEdit()">Edit Review</button>
                 <button id="delete_popup" class="checkbtn"
                     onclick="location.href='../reviews/{{this.course._id}}/{{this.review._id}}/delete';">Delete

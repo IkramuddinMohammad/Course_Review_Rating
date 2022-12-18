@@ -17,7 +17,7 @@
             <div class="container-fullmode">
                 <div class="reviewHeading">
                         <p class="course_name"><a href="/courses/{{this.course._id}}">{{this.course.name}}</a></p>
-                        <p class="course_rating">Semester: {{this.review.semesterVal}}</a></p>
+                        <p class="course_rating">Semester: {{this.review.semesterVal}}</p>
                         <p class="course_rating">Your Rating: {{this.review.rating}}</p>
                 </div>
                     <p>{{this.review.reviewText}}</p>
@@ -33,7 +33,7 @@
                     onsubmit="return editreviewValidate(this);" method="POST">
                     <label for="courseName"> </label>
                     <input type="text" name="courseName" id="courseName" value="{{this.course.name}}">
-                    <label for="reviewersemester"> </label>
+                    <label for="semesterVal"> </label>
                     <input type="text" name="semesterVal" id="semesterVal" value="{{this.review.semesterVal}}">
                     <label for="rating"> </label>
                     <input type="number" name="rating" id="rating" value="{{this.review.rating}}">
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-
+    </div>
         <script>
             function openEdit() {
                 document.getElementById("openedit_form").style.display = "block";

@@ -67,20 +67,20 @@
     {{else}}
         <button class="add_review_btn" onclick="location.href='../students/login';">Add a Review</button>
     {{/if}}
-    <div class="form-popup" id="opencheck_form">
+    <div class="popup_window" id="opencheck_form">
         <h2>Have you completed the course or registered in the course already?</h2>
         <form id="taken_form" class="form-container" action="javascript:void(0);">
             <button type="button" class="checkbtn" onclick="opencreateReview()">Yes</button>
             <button type="button" class="checkbtn" onclick="closeCheckAlert()">No</button>
         </form>
     </div>
-    <div class="form-popup" id="closecheck_form">
+    <div class="popup_window" id="closecheck_form">
         <h2>Sorry you cannot add review</h2>
         <form id="closecheckform" name="closecheckform" class="form-container" action="javascript:void(0);">
             <button type="button" class="checkbtn" onclick="closeCheckFormAlert()">Cancel</button>
         </form>
     </div>
-    <div class="form-popup" id="openadd_form">
+    <div class="popup_window" id="openadd_form">
         <h2>Add a Review</h2>
         <form id="review_form" action="/reviews/{{course._id}}/add" onsubmit="return reviewValidate(this);"
             method="POST">
@@ -103,7 +103,7 @@
             <button type="button" class="btn cancel" onclick="closecreateReview()">Cancel</button>
         </form>
     </div>
-    <div class="form-popup" id="openalert_form">
+    <div class="popup_window" id="openalert_form">
         <p>You have already added a Review!</p>
         <p>You can edit your Review in your Profile</p>
         <form id="review-edit_form" name="review-edit_form" class="form-container" action="javascript:void(0);">

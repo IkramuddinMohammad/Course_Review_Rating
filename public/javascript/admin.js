@@ -72,8 +72,8 @@
           window.location.replace("/");
         },
         error: function (responseError) {
-          error.innerHTML = responseError.responseText
-          error.show();
+          error.innerHTML= responseError.responseText;
+          error.style.display = "show"
         },
       });
     });

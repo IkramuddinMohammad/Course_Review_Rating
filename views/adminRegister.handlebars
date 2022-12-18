@@ -1,29 +1,19 @@
 <main>
-  <div class="loginPage" id="adminregister-details">
-    <h2>please register with your admin email and also enter the passcode</h2>
+  <h2>please register with your admin email and also enter the passcode</h2>
+  <div class="container" id="adminregister-details">
     <form class="registerForm" id="adminregister_form" name="RegisterForm" action="/courses/admin/register"
       method="POST">
-      <div class="group">
-        <label for="email">
-          <input type="text" name="email" id="email" placeholder="Enter your Email">
-        </label>
+        <label for="email"></label>
+          <input type="text" name="email" id="email" placeholder="Enter your Email"> 
         <span id="emailError" class="error"></span>
-      </div>
-      <div class="group">
-        <label for="password">
+        <label for="password"></label>
           <input type="password" id="password" name="password" minlength="8" placeholder="Enter a Password">
-        </label>
+        
         <span id="passwordError" class="error"></span>
-      </div>
-      <div class="group">
-        <label for="passcode">
+        <label for="passcode"></label>
           <input type="text" id="passcode" name="passcode" minlength="8" placeholder="Enter a Passcode">
-        </label>
         <span id="passcodeError" class="error"></span>
-      </div>
-      <div class="group">
         <button type="submit" class="btn">Register</button>
-      </div>
     </form>
     {{#if error}}
     <p id="error-msg" class="error-msg">{{error}}</p>

@@ -70,8 +70,8 @@
         success: function (data) {
           window.location.replace("/");
         }, error: function (r) {
-          error.style.display = "block"
-          error.innerHTML = r.responseText
+          error.innerHTML= r.responseText;
+          error.style.display = "show"
         }
       });
     });

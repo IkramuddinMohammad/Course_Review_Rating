@@ -11,10 +11,10 @@ module.exports = {
         reviewId = await validate.validateId("createComment", reviewId, "validateId");
         commentInput = await validate.validateString("createComment", commentInput, "commentInput")
         const commentCollection = await comments();
-        const commented = await commentCollection.findOne({courseId: courseId.toString(), studentId: studentId.toString()});
-       if(commented){
+        const commented = await commentCollection.findOne({ courseId: courseId.toString(), studentId: studentId.toString() });
+        if (commented) {
             throw 'createComment: Already Commented the course';
-       }
+        }
         let addNewComment = {
             courseId: courseId,
             studentId: studentId,

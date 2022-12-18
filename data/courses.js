@@ -111,7 +111,7 @@ module.exports = {
         passCode = validate.validateName("addAdmin", passCode, "PassCode");
         email = validate.validateEmail("addAdmin", email, "Email");
         password = validate.validatePassword("addAdmin", password);
-        if(passcodeString === passCode){
+        if (passcodeString === passCode) {
             const adminCollection = await admin();
             email = email.toLowerCase();
             const adm = await adminCollection.findOne({ email: email });
@@ -126,9 +126,9 @@ module.exports = {
                 return { insertedAdmin: true };
             } else
                 throw "addAdmin: Please try with other email. This email is already registered.";
-        }else{
+        } else {
             throw "addAdmin: Entered passcode is wrong. Passcode is case-sensitive. Try Again";
         }
-        
+
     },
 }

@@ -27,10 +27,10 @@
         {{#each reviews}}
         <div class="reviews">
             <div class="container-fullmode">
-                    <p><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a>
-                    </p>
-                    <p>{{this.semesterVal}}, Rating: {{this.rating}}/5</p>
-                    <p>{{this.reviewText}}</p>
+                <p><a href="/students/{{this.student._id}}">{{this.student.firstName}} {{this.student.lastName}}</a>
+                </p>
+                <p>{{this.semesterVal}}, Rating: {{this.rating}}/5</p>
+                <p>{{this.reviewText}}</p>
                 <h4>Comments</h4>
                 <div class="comments">
                     {{#if ../studentLoggedIn}}
@@ -83,7 +83,8 @@
     </div>
     <div class="form-popup" id="openadd_form">
         <h2>Add a Review</h2>
-        <form id="review_form" action="/reviews/{{course._id}}/add" onsubmit="return reviewValidate(this);" method="POST">
+        <form id="review_form" action="/reviews/{{course._id}}/add" onsubmit="return reviewValidate(this);"
+            method="POST">
             <p> Select semester:
                 <select name="selectSemester" id="selectSemester">
                     <option id="fall2022" value="fall2022">Fall 2022</option>
@@ -148,50 +149,50 @@
             const ratingError = document.getElementById('ratingError');
             const reviewTextError = document.getElementById('reviewTextError');
             if (form) {
-                    var valid = false;
-                    let rating = document.forms["review_form"]["rating"].value;
-                    let reviewText = document.forms["review_form"]["reviewText"].value;
+                var valid = false;
+                let rating = document.forms["review_form"]["rating"].value;
+                let reviewText = document.forms["review_form"]["reviewText"].value;
 
-                    if (reviewText.trim().length == 0) {
-                        reviewTextError.style.display = "block";
-                        reviewTextError.innerHTML = "Please enter review"
-                        valid= true
-                        return false
-                    }
-                    if (!/^[0-9]+$/.test(rating)) {
-                        ratingError.style.display = "block";
-                        ratingError.innerHTML = "Please enter rating"
-                        valid= true
-                        return false
-                    } else if (rating < 1 || rating > 5) {
-                        ratingError.style.display = "block";
-                        ratingError.innerHTML = "Please enter rating between 1 and 5"
-                        valid= true
-                        return false
-                    }
-                    if (!valid) {
-                        ratingError.style.display = "none";
-                        reviewTextError.style.display = "none";
-                        return true;
-                    }
+                if (reviewText.trim().length == 0) {
+                    reviewTextError.style.display = "block";
+                    reviewTextError.innerHTML = "Please enter review"
+                    valid = true
+                    return false
+                }
+                if (!/^[0-9]+$/.test(rating)) {
+                    ratingError.style.display = "block";
+                    ratingError.innerHTML = "Please enter rating"
+                    valid = true
+                    return false
+                } else if (rating < 1 || rating > 5) {
+                    ratingError.style.display = "block";
+                    ratingError.innerHTML = "Please enter rating between 1 and 5"
+                    valid = true
+                    return false
+                }
+                if (!valid) {
+                    ratingError.style.display = "none";
+                    reviewTextError.style.display = "none";
+                    return true;
+                }
             }
         }
         function commentValidate(form) {
             const commentValueError = document.getElementById('commentValueError');
             if (form) {
-                
-                    var valid = false;
-                    let commentValue = document.forms["comment_form"]["commentValue"].value;
-                    if (commentValue.trim().length == 0) {
-                        commentValueError.style.display = "block";
-                        commentValueError.innerHTML = "Please enter comment"
-                        valid= true
-                        return false
-                    }
-                    if (!valid){
-                        commentValueError.style.display = "none";
-                        return true
-                    }
+
+                var valid = false;
+                let commentValue = document.forms["comment_form"]["commentValue"].value;
+                if (commentValue.trim().length == 0) {
+                    commentValueError.style.display = "block";
+                    commentValueError.innerHTML = "Please enter comment"
+                    valid = true
+                    return false
+                }
+                if (!valid) {
+                    commentValueError.style.display = "none";
+                    return true
+                }
             }
         }
     </script>

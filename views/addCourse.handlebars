@@ -3,10 +3,10 @@
         <h1>Add course</h1>
         <form method="POST" id="addcourse_form" action="/courses/add" onsubmit="return validate(this);">
             <label for="name">Course Name: </label>
-            <input type="text" name="name" id="name" minlength="4"  placeholder="Course Name">
+            <input type="text" name="name" id="name" minlength="4" placeholder="Course Name">
             <span id="nameError" class="error"></span>
             <label for="courseId">Course Id: </label>
-            <input type="text" name="courseId" id="courseId" minlength="4"  placeholder="Course Id">
+            <input type="text" name="courseId" id="courseId" minlength="4" placeholder="Course Id">
             <span id="courseIdError" class="error"></span>
             <label for="credits">Course Credits: </label>
             <input type="number" name="credits" id="credits" placeholder="Course Credits between 1 and 3">

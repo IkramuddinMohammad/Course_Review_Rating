@@ -1,5 +1,5 @@
 <main>
-    <div class="container-widemode" id ="positionfixed">
+    <div class="container-widemode" id="positionfixed">
         <h1>{{firstName}} {{lastName}} </h1>
     </div>
     <div class="container-widemode" id="right">
@@ -9,14 +9,15 @@
             <div class="container-fullmode">
                 <div class="reviewHeading">
                     <div class="reviewerName">
-                        <p class = "course_name"><a href="/courses/{{this.course._id}}">{{this.course.name}}</a></p>
+                        <p class="course_name"><a href="/courses/{{this.course._id}}">{{this.course.name}}</a></p>
                     </div>
                     <div class="reviewerRating">
-                        <p class = "course_rating"><a href="/reviews/{{this.review._id}}">Rating: {{this.review.rating}}</a></p>
+                        <p class="course_rating"><a href="/reviews/{{this.review._id}}">Rating:
+                                {{this.review.rating}}</a></p>
                     </div>
                 </div>
-                
-                <div class = "reviewText">
+
+                <div class="reviewText">
                     <p>{{this.review.reviewText}}</p>
                 </div>
             </div>

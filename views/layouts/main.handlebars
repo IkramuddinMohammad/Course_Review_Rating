@@ -11,26 +11,27 @@
 
 <body>
     <header>
-            <nav>
-               <a href="/">Home</a>
-                <a href="/courses">Courses</a>
-                {{#if studentLoggedIn}}
-               <a href="/students/profile" id="profile">Profile</a>
-                <a href="/students/logout" id="studentLogout">Logout</a>
-                {{else if adminLoggedIn}}
-                <a href="/courses/add" id="addCourse">Add course</a>
-                <a href="/students/logout" id="adminLogout">Logout</a>
-                {{else}}
-               <a href="/students/login" id="login">Login</a>
-                <a href="/courses/admin" id="admin">Admin</a>
-                {{/if}}
-            </nav>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/courses">Courses</a>
+            {{#if studentLoggedIn}}
+            <a href="/students/profile" id="profile">Profile</a>
+            <a href="/students/logout" id="studentLogout">Logout</a>
+            {{else if adminLoggedIn}}
+            <a href="/courses/add" id="addCourse">Add course</a>
+            <a href="/students/logout" id="adminLogout">Logout</a>
+            {{else}}
+            <a href="/students/login" id="login">Login</a>
+            <a href="/courses/admin" id="admin">Admin</a>
+            {{/if}}
+        </nav>
     </header>
-  {{{body}}}
+    {{{body}}}
     <footer>
         <nav>
             <a href="/courses/contactus" id="contact-us">Contact-US</a>
         </nav>
     </footer>
 </body>
+
 </html>

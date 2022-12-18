@@ -3,12 +3,12 @@
         <h2>Edit Review</h2>
         <form action="/reviews/{{reviewId}}/edit" method="post">
             <label for="semesterVal">Semester</label>
-                <input type="text" id="semesterVal" name="semesterVal" value="{{semesterVal}}" readonly>
+            <input type="text" id="semesterVal" name="semesterVal" value="{{semesterVal}}" readonly>
             <label for="rating">Rating</label>
-                <input type="number" id="rating" name="rating" value="{{rating}}" required>
+            <input type="number" id="rating" name="rating" value="{{rating}}" required>
             <label for="reviewData">Review Text</label>
-                <input type="text" id="reviewData" name="reviewData" value="{{reviewData}}" required>  
+            <input type="text" id="reviewData" name="reviewData" value="{{reviewData}}" required>
             <button type="submit" class="btn">Submit</button>
         </form>
     </div>
-</main> 
+</main>

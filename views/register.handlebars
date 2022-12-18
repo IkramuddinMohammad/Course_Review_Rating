@@ -4,7 +4,7 @@
     <form class="registerForm" id="register_form" name="RegisterForm" action="/students/register" method="POST">
       <div class="group">
         <label for="firstname">
-          <input type="text" name="firstname" id="firstname" minlength="4" placeholder="Enter your First Name" >
+          <input type="text" name="firstname" id="firstname" minlength="4" placeholder="Enter your First Name">
           <span id="firstnameError" class="error"></span>
         </label>
       </div>
@@ -26,14 +26,14 @@
       </div>
       <div class="group">
         <button type="submit" class="btn">Register</button>
-      </div>  
+      </div>
     </form>
     {{#if error}}
-            <p id="error-msg" class="error-msg">{{error}}</p>
-            {{/if}}
+    <p id="error-msg" class="error-msg">{{error}}</p>
+    {{/if}}
   </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous">
-  </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
   <script src="/public/javascript/register.js"></script>
 </main>

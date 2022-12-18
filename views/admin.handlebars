@@ -3,11 +3,11 @@
     <div class="container" id="adminlogin-details">
         <form id="adminlogin_form" name="adminloginForm" action="/courses/admin" method="POST">
             <label for="email">Email: </label>
-                <input type="text" name="email" id="email" placeholder="Enter your Email">
-                <span id="emailError" class="error"></span>
-             <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Enter your Password">
-                <span id="passwordError" class="error"></span>
+            <input type="text" name="email" id="email" placeholder="Enter your Email">
+            <span id="emailError" class="error"></span>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="Enter your Password">
+            <span id="passwordError" class="error"></span>
             <button type="submit" class="btn">Login</button>
             <p>Don't have account? Please <a href="/courses/admin/register">Admin Registration</a></p>
             {{#if error}}
@@ -15,7 +15,7 @@
             {{/if}}
         </form>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
         </script>

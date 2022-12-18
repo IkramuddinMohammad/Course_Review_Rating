@@ -19,59 +19,59 @@ function validate(form) {
     if (name.trim().length == 0) {
       nameError.style.display = "block";
       nameError.innerHTML = "Please enter name"
-      valid= true
+      valid = true
       return false
     }
     if (courseId.trim().length == 0) {
       courseIdError.style.display = "block";
       courseIdError.innerHTML = "Please enter courseId"
-      valid= true
+      valid = true
       return false
     }
     if (!/^[0-9]+$/.test(credits)) {
       creditsError.style.display = "block";
       creditsError.innerHTML = "Please enter credits"
-      valid= true
+      valid = true
       return false
     } else if (credits < 1 || credits > 3) {
       creditsError.style.display = "block";
       creditsError.innerHTML = "Please enter credits between 1 and 3"
-      valid= true
+      valid = true
       return false
     }
 
     if (professorName.trim().length == 0) {
       professorNameError.style.display = "block";
       professorNameError.innerHTML = "Please enter Professor Name"
-      valid= true
+      valid = true
       return false
     }
     if (professorEmail.trim().length == 0) {
       professorEmailError.style.display = "block";
       professorEmailError.innerHTML = "Please enter Professor Email"
-      valid= true
+      valid = true
       return false
     } else if (!validateEmail(professorEmail)) {
       professorEmailError.style.display = "block";
       professorEmailError.innerHTML = "Please enter valid email"
-      valid= true
+      valid = true
       return false
     }
     if (taName.trim().length == 0) {
       taNameError.style.display = "block";
       taNameError.innerHTML = "Please enter Ta Name"
-      valid= true
+      valid = true
       return false
     }
     if (taEmail.trim().length == 0) {
       taEmailError.style.display = "block";
       taEmailError.innerHTML = "Please enter Ta Email"
-      valid= true
+      valid = true
       return false
     } else if (!validateEmail(taEmail)) {
       taEmailError.style.display = "block";
       taEmailError.innerHTML = "Please enter valid email"
-      valid= true
+      valid = true
       return false
     }
     if (!valid) {

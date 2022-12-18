@@ -49,11 +49,11 @@ router
         req.session.student = studentData.student;
         res.status(200).redirect("/courses");
       } else {
-      return res.status(500).send("Either the email or password is invalid");
+        return res.status(500).send("Either the email or password is invalid");
+      }
+    } catch (error) {
+      return res.status(400).send(error);
     }
-  } catch (error) {
-    return res.status(400).send(error);
-  }
   });
 
 

@@ -10,8 +10,8 @@ router.get("/", async (req, res) => {
     return res.redirect("/courses");
   } catch (error) {
     return res.status(404).render("error", {
-      error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
@@ -22,8 +22,8 @@ router.get('/:id', async (req, res) => {
     return res.redirect("/");
   } catch (error) {
     return res.status(404).render("error", {
-      error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
@@ -40,23 +40,26 @@ router.post("/:id/add", async (req, res) => {
     id = await validate.validateId("Post Add", id, "id");
   } catch (error) {
     return res.status(404).render("error", {
-      error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
   try {
     rating = validate.validateNumber("Post Add", rating, "rating");
   } catch (error) {
-    return res.status(400).render("error", {error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
-      adminLoggedIn: sessionValidate.adminLoggedIn});
+    return res.status(400).render("error", {
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
+      adminLoggedIn: sessionValidate.adminLoggedIn
+    });
   }
   try {
     semesterVal = validate.validateString("Post Add", semesterVal, "semester");
   } catch (error) {
-    return res.status(400).render("error", {error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+    return res.status(400).render("error", {
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
@@ -64,8 +67,8 @@ router.post("/:id/add", async (req, res) => {
     reviewText = await validate.validateString("Post Add", reviewText, "reviewText");
   } catch (error) {
     return res.status(400).render("error", {
-      error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
@@ -74,8 +77,8 @@ router.post("/:id/add", async (req, res) => {
     return res.redirect("/courses/" + id);
   } catch (error) {
     return res.status(404).render("error", {
-      error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
@@ -85,19 +88,19 @@ router.route("/:id/edit")
   .get(async (req, res) => {
     sessionValidate = validate.sessionValidation(req.session.AuthCookie)
     let id = req.params.id;
-    let studentId = sessionValidate.studentId ;
+    let studentId = sessionValidate.studentId;
     try {
       id = await validate.validateId("Get Edit", id, "id");
     } catch (error) {
       return res.status(400).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
         adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
     try {
       const review = await reviews.getReview(id);
-      let semesterVal= review.semesterVal;
+      let semesterVal = review.semesterVal;
       if (studentId != review.studentId) {
         return res.redirect("/reviews");
       } else {
@@ -111,8 +114,8 @@ router.route("/:id/edit")
       }
     } catch (error) {
       return res.status(404).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
         adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
@@ -127,8 +130,8 @@ router.route("/:id/edit")
       id = validate.validateId("Post Edit", id, "id");
     } catch (error) {
       return res.status(400).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
         adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
@@ -136,15 +139,15 @@ router.route("/:id/edit")
       rating = validate.validateNumber("Post Edit", rating, "rating");
     } catch (error) {
       return res.status(400).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
         adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
     if (rating > 5 || rating < 1) {
       return res.status(400).render("error", {
-        error: "Post Edit: Rating should between 1 and 5", 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        error: "Post Edit: Rating should between 1 and 5",
+        studentLoggedIn: sessionValidate.studentLoggedIn,
         adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
@@ -152,8 +155,8 @@ router.route("/:id/edit")
       reviewData = validate.validateString("Post Edit", reviewData, "reviewData");
     } catch (error) {
       return res.status(400).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
         adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
@@ -166,8 +169,8 @@ router.route("/:id/edit")
       return res.status(200).redirect("/courses");
     } catch (error) {
       return res.status(404).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
         adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
@@ -178,29 +181,29 @@ router.get('/:courseId/:reviewId/delete', async (req, res) => {
   let courseId = req.params.courseId
   let reviewId = req.params.reviewId
   try {
-      id = validate.validateId("Get Delete", courseId, "course Id");
-    } catch (error) {
-      return res.status(400).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
-        adminLoggedIn: sessionValidate.adminLoggedIn
-      });
-    }
-    try {
-      id = validate.validateId("Get Delete", reviewId, "review Id");
-    } catch (error) {
-      return res.status(400).render("error", {
-        error: error, 
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
-        adminLoggedIn: sessionValidate.adminLoggedIn
-      });
-    }
+    id = validate.validateId("Get Delete", courseId, "course Id");
+  } catch (error) {
+    return res.status(400).render("error", {
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
+      adminLoggedIn: sessionValidate.adminLoggedIn
+    });
+  }
+  try {
+    id = validate.validateId("Get Delete", reviewId, "review Id");
+  } catch (error) {
+    return res.status(400).render("error", {
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
+      adminLoggedIn: sessionValidate.adminLoggedIn
+    });
+  }
   try {
     await reviews.getReview(reviewId);
   } catch (error) {
     return res.status(404).render("error", {
-      error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }
@@ -211,14 +214,14 @@ router.get('/:courseId/:reviewId/delete', async (req, res) => {
     } else {
       return res.status(404).render("error", {
         error: "not able to delete comments",
-        studentLoggedIn: sessionValidate.studentLoggedIn, 
-      adminLoggedIn: sessionValidate.adminLoggedIn
+        studentLoggedIn: sessionValidate.studentLoggedIn,
+        adminLoggedIn: sessionValidate.adminLoggedIn
       });
     }
   } catch (error) {
     return res.status(400).render("error", {
-      error: error, 
-      studentLoggedIn: sessionValidate.studentLoggedIn, 
+      error: error,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
   }

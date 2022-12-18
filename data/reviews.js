@@ -51,7 +51,7 @@ module.exports = {
                 _id: ObjectId(studentId)
             }, {
                 $push: {
-                    reviewIds: newReviewData._id.toString()
+                    reviews: newReviewData._id.toString()
                 }
             });
             if (studentInfo.modifiedCount === 0) throw 'createReview: Could not update Studentss Collection with Review Data!';
@@ -107,6 +107,20 @@ module.exports = {
         const getRev = await reviewcollection.findOne({ _id: ObjectId(id) });
         const listOFComments = getRev.comments;
         if (!getRev) throw `removeReview: No Review with ${id}`;
+        if (listOFComments) {
+            for (let i in listOFComments)
+                try {
+                    const com = await commentCollection.findOne({
+                        _id: ObjectId(listOFComments[i])
+                    });
+                    const deleteCommInfo = await commentCollection.deleteOne({
+                        _id: com._id
+                    });
+                    if (deleteCommInfo.deletedCount === 0) throw `removeReview:Could not delete Comment ${ObjectId.createFromHexString(listOFComments[i])}`;
+                } catch (e) {
+                    throw 'removeReview: Could not delete comment from review';
+                }
+        }
         try {
             const deleteReviewFromCourse = await courseCollection.updateOne({
                 _id: ObjectId(getRev.courseId)
@@ -114,33 +128,22 @@ module.exports = {
                 $pull: {
                     reviews: id.toString()
                 }
-            });
-            if (deleteReviewFromCourse.deletedCount === 0) throw `removeReview: Could not delete Review ${id}`;
+            },{ new: true });
+            if (deleteReviewFromCourse.modifiedCount === 0) throw `removeReview: Could not delete Review ${id}`;
         } catch (e) {
             throw `removeReview: Could not delete review from course`;
         }
         try {
-            const deleteRevFromStuInfo = await studentColection.updateOne({
+            const deleteRevFromStuInfo = await studentColection.update({
                 _id: ObjectId(getRev.studentId)
             }, {
                 $pull: {
-                    reviewIds: id.toString()
+                    reviews: id.toString()
                 }
-            });
-            if (deleteRevFromStuInfo.deletedCount === 0) throw `removeReview: Could not delete review ${id}`;
+                },{ new: true });
+            if (deleteRevFromStuInfo.modifiedCount === 0) throw `removeReview: Could not delete review ${id}`;
         } catch (e) {
             throw "removeReview: Could not delete review from students";
-        }
-        if (listOFComments) {
-            for (let i in listOFComments)
-                try {
-                    const deleteCommInfo = await commentCollection.deleteOne({
-                        _id: ObjectId(i)
-                    });
-                    if (deleteCommInfo.deletedCount === 0) throw `removeReview:Could not delete Comment ${i}`;
-                } catch (e) {
-                    throw 'removeReview: Could not delete comment from review';
-                }
         }
         const deleteReviewInfo = await reviewcollection.deleteOne({
             _id: ObjectId(id)

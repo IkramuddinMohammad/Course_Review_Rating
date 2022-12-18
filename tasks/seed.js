@@ -115,7 +115,7 @@ const main = async () => {
     const c1r2c10 = await comments.createComment(String(C10._id), String(S2._id), String(r2c10._id), "The course very easy to understand");
     const c2r2c10 = await comments.createComment(String(C10._id), String(S3._id), String(r2c10._id), "Easy to understand the concepts");
     
-    const admin = await courses.addAdmin("admin@gmail.com", "Admin@123");
+    const admin = await courses.addAdmin("onlyforadmin","admin@gmail.com", "Admin@123");
 
     console.log('Done seeding database for course Collection!');
     db.close()

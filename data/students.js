@@ -21,8 +21,8 @@ module.exports = {
                 lastName: lastName,
                 email: email,
                 hashedPassword: passwordHash,
-                reviewIds: [],
-                commentIds: []
+                reviews: [],
+                comments: []
             }
             const insertInfo = await studentCollection.insertOne(newStudents);
             if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "createStudents: Not able to add new student";

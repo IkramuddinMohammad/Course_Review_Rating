@@ -98,7 +98,8 @@
         }),
         dataType: "text",
         success: function (data) {
-          window.location.replace("/");
+          window.location.protocol
+          window.location.replace(window.location.protocol+window.location.host+data.url);
         },
          error: function (r) {
           error.innerHTML= r.responseText;

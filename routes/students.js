@@ -123,10 +123,11 @@ router.get("/myprofile", async (req, res) => {
 router.get("/profile", async (req, res) => {
   sessionValidate = validate.sessionValidation(req.session.AuthCookie)
   if (sessionValidate.studentId) {
+    try {
     let studentData = await students.getStudents(sessionValidate.studentId);
     let reviewObject = [];
-    for (i = 0; i < studentData.reviewIds.length; i++) {
-      let latestReview = await reviews.getReview(studentData.reviewIds[i]);
+    for (let i=0; i<studentData.reviews.length; i++) {
+      let latestReview = await reviews.getReview(studentData.reviews[i]);
       let currcourse = await courses.getCourse(latestReview.courseId);
       let reviewInfo = {
         review: latestReview,
@@ -142,11 +143,21 @@ router.get("/profile", async (req, res) => {
       reviews: reviewObject,
       studentLoggedIn: sessionValidate.studentLoggedIn
     });
-  } else {
-    res.status(403).render("login", {
-      error: "something went wrong"
+  } catch(e){
+    res.status(400).render("error", {
+      error: e,
+      studentLoggedIn: sessionValidate.studentLoggedIn,
+      adminLoggedIn: sessionValidate.adminLoggedIn
+
     });
   }
+}else {
+    res.status(403).render("login", {
+      error: "Check, ther is an issue"
+    });
+  }
+
+
 });
 
 router.get("/:id", async (req, res) => {

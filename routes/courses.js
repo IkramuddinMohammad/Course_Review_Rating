@@ -54,6 +54,7 @@ router.route('/admin/register')
       return res.status(400).send(error);
     }
   });
+
 router.get("/contactus", async (req, res) => {
   sessionValidate = validate.sessionValidation(req.session.AuthCookie)
   try {

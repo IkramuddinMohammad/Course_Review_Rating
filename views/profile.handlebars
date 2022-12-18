@@ -24,31 +24,34 @@
                     <p>{{this.review.reviewText}}</p>
                 </div>
                     <button id="edit_popup" class="checkbtn" onclick="openEdit()">Edit Review</button>
-                    <button id="delete_popup" class="checkbtn" onclick="../reviews/{{this.course._id}}/{{this.review._id}}/delete">Delete Review</button> 
+                    <button id="delete_popup" class="checkbtn" onclick="location.href='../reviews/{{this.course._id}}/{{this.review._id}}/delete';"">Delete Review</button> 
         </div>
-        {{/each}}
-    </div>
-    <div class="popup_window" id="openedit_form">
+        <div class="popup_window" id="openedit_form">
         <h2>Edit Review</h2>
         <form id="editreview_form" action="/reviews/{{this.review._id}}/edit" onsubmit="return editreviewValidate(this);"
             method="POST">
+            <label for="courseName"> </label>
+                <input type="text" name="courseName" id="courseName" value="{{this.course.name}}">
+           <label for="reviewersemester"> </label>
+                <input type="text" name="semesterVal" id="semesterVal" value="{{this.review.semesterVal}}">
             <label for="rating"> </label>
-                <input type="number" name="rating" id="rating" placeholder="Enter your Rating">
-                <span id="ratingError" class="error"></span>
-           
+                <input type="number" name="rating" id="rating" value="{{this.review.rating}}">
+                <span id="ratingError" class="error"></span>  
             <label for="reviewText"></label>
-                <input type="text" name="reviewText" id="reviewText" placeholder="Enter your Review">
-                <span id="reviewTextError" class="error"></span>
-            
+                <input type="text" name="reviewText" id="reviewText" value="{{this.review.reviewText}}">
+                <span id="reviewTextError" class="error"></span> 
             <button type="submit" class="btn">Edit Review</button>
             <button type="button" class="btn cancel" onclick="closeEditReview()">Cancel</button>
         </form>
+        </div>
+        {{/each}}
     </div>
+    
     <script>
     function openEdit() {
             document.getElementById("openedit_form").style.display = "block";
         }
-        function closecreateReview() {
+        function closeEditReview() {
             document.getElementById("openedit_form").style.display = "none";
         }
         function editreviewValidate(form) {

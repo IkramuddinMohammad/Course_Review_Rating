@@ -69,14 +69,14 @@ module.exports = {
         }
         try {
             const reviewCollection = await reviews();
-            const deletionInfoForCommentFromReview = await reviewCollection.updateOne({
+            const dlecommentfromreview = await reviewCollection.updateOne({
                 _id: ObjectId(comment.reviewId)
             }, {
                 $pull: {
                     comments: id.toString()
                 }
             });
-            if (deletionInfoForCommentFromReview.deletedCount === 0) {
+            if (dlecommentfromreview.deletedCount === 0) {
                 throw `removeComment: Could not delete Comment ${id}`;
             }
         } catch (error) {

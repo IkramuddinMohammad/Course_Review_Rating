@@ -89,16 +89,15 @@
                     <option id="fall2021" value="fall2021">Fall 2021</option>
                 </select>
             </p>
-            <label for="rating">
+            <label for="rating"></label>
                 <input type="number" name="rating" id="rating" placeholder="Enter your Rating">
                 <span id="ratingError" class="error"></span>
-            </label>
-            <label for="reviewText">
+            <label for="reviewText"></label>
                 <input type="text" name="reviewText" id="reviewText" placeholder="Enter your Review">
                 <span id="reviewTextError" class="error"></span>
-            </label>
-            <button type="submit" class="btn">Add Review</button>
-            <button type="button" class="btn cancel" onclick="closecreateReview()">Cancel</button>
+            
+            <button type="submit" class="add_btn">Add Review</button>
+            <button type="button" class="add_btn margin-auto" onclick="closecreateReview()">Cancel</button>
         </form>
     </div>
     <div class="popup_window" id="openalert_form">

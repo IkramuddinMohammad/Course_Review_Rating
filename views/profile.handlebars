@@ -2,9 +2,11 @@
     <div class="container-widemode" id="positionfixed">
         <h1>{{firstName}} {{lastName}} </h1>
         <p>{{email}}</p>
+        <h4>Course Taken: </h4>
         {{#each courseslist}}
             <p>{{ this }}</p>
         {{/each}}
+        
         <button id="editprofile_popup" class="checkbtn" onclick="openEditProfile()">Add course</button>
     </div>
 

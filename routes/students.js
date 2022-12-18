@@ -162,6 +162,7 @@ router.get("/profile", async (req, res) => {
       firstName: studentData.firstName,
       lastName: studentData.lastName,
       email: studentData.email,
+      courseslist: studentData.coursesList,
       reviews: reviewObject,
       studentLoggedIn: sessionValidate.studentLoggedIn
     });
@@ -211,6 +212,7 @@ router.get("/:id", async (req, res) => {
       firstName: studentData.firstName,
       lastName: studentData.lastName,
       reviews: reviewObj,
+      courseslist: studentData.coursesList,
       studentLoggedIn: sessionValidate.studentLoggedIn,
       adminLoggedIn: sessionValidate.adminLoggedIn
     });
@@ -222,5 +224,41 @@ router.get("/:id", async (req, res) => {
     });
   }
 });
+
+router.route("/edit")
+.post(async (req, res) => {
+    sessionValidate = validate.sessionValidation(req.session.AuthCookie)
+    let courseTaken = req.body.courseTaken;
+    let studentId = sessionValidate.studentId
+    try {
+      courseTaken = validate.validateString("Post Profile Edit", courseTaken, "course Taken");
+    } catch (error) {
+      return res.status(400).render("error", {
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
+        adminLoggedIn: sessionValidate.adminLoggedIn
+      });
+    }
+    try {
+      const courseCollection =  await cour();
+      let getCourse = await courseCollection.findOne({ courseId: courseTaken.toString()}); 
+        if(!getCourse){
+          return res.status(400).render("error",{
+            error: `No courses with the course id ${courseTaken}`,
+            studentLoggedIn: sessionValidate.studentLoggedIn,
+            adminLoggedIn: sessionValidate.adminLoggedIn
+          }) 
+        }else{
+          await students.updateProfile(studentId, courseTaken);
+          return res.status(200).redirect("/courses");
+        }
+    } catch (error) {
+      return res.status(404).render("error", {
+        error: error,
+        studentLoggedIn: sessionValidate.studentLoggedIn,
+        adminLoggedIn: sessionValidate.adminLoggedIn
+      });
+    }
+  });
 
 module.exports = router;

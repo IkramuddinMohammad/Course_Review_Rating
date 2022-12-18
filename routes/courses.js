@@ -461,7 +461,6 @@ router.get("/:id", async (req, res) => {
               }
             }
           }
-          console.log(studentData.reviewbtnEnable)
       studentData.reviewedcoursePage = listOfReviews.some(rev => rev.studentId === studentData._id.toString());
     }
     course = await courses.getCourse(id);

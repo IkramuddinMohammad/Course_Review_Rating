@@ -64,7 +64,7 @@
         <button id="reviewed_popup" class="add_review_btn" onclick="location.href='../students/profile';">Edit Review</button>
     {{else}}
     {{#if currentStudentsData.reviewbtnEnable}}
-        <button id="check_review_popup" class="add_review_btn" onclick="openCheckAlert()">Add a Review</button>
+        <button id="check_review_popup" class="add_review_btn" onclick="opencreateReview()">Add a Review</button>
     {{else}}
          <button id="check_review_popup" class="add_review_btn" onclick="openAlert()">Add a Review</button>
     {{/if}}
@@ -72,14 +72,6 @@
     {{else}}
         <button class="add_review_btn" onclick="location.href='../students/login';">Add a Review</button>
     {{/if}}
-    
-    <div class="popup_window" id="opencheck_form">
-        <h2>Have you completed the course or registered in the course already?</h2>
-        <form id="taken_form" class="form-container" action="javascript:void(0);">
-            <button type="button" class="checkbtn" onclick="opencreateReview()">Yes</button>
-            <button type="button" class="checkbtn" onclick="closeCheckAlert()">No</button>
-        </form>
-    </div>
     <div class="popup_window" id="closecheck_form">
         <h2>Sorry you cannot add review</h2>
         <form id="closecheckform" name="closecheckform" class="form-container" action="javascript:void(0);">
@@ -129,17 +121,6 @@
         }
         function opencreateReview() {
             document.getElementById("openadd_form").style.display = "block";
-            document.getElementById("opencheck_form").style.display = "none";
-            document.getElementsByClassName("add_review_btn")[0].style.display = "none"
-        }
-        function openCheckAlert() {
-            document.getElementById("opencheck_form").style.display = "block";
-            document.getElementsByClassName("add_review_btn")[0].style.display = "none"
-        }
-        
-        function closeCheckAlert() {
-            document.getElementById("closecheck_form").style.display = "block";
-            document.getElementById("opencheck_form").style.display = "none";
             document.getElementsByClassName("add_review_btn")[0].style.display = "none"
         }
         function closeCheckFormAlert() {

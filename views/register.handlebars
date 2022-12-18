@@ -1,7 +1,7 @@
 <main>
   <h2>please register with your college email</h2>
   <div class="container" id="register-details">
-     
+
     <form class="registerForm" id="register_form" name="RegisterForm" action="/students/register" method="POST">
       <label for="firstname"></label>
       <input type="text" name="firstname" id="firstname" minlength="4" placeholder="Enter your First Name">
@@ -16,32 +16,33 @@
       <input type="password" id="password" name="password" minlength="8" placeholder="Enter a Password">
       <span id="passwordError" class="error"></span>
       <label for="coursetaken1"></label>
-      <input type="text" id="coursetaken1" name="coursetaken1" minlength="4" placeholder="Same as listed in courses(case sensitive)">
+      <input type="text" id="coursetaken1" name="coursetaken1" minlength="4"
+        placeholder="Same as listed in courses(case sensitive)">
       <span id="coursetaken1Error" class="error"></span>
-       <div id="new_course"></div>
-        <button onclick="add()">Add</button>
-        <button onclick="remove()">remove</button>
-        <input type="hidden" value="1" id="total_course">
-        <button type="submit" class="btn">Register</button>
+      <div id="new_course"></div>
+      <button onclick="add()">Add</button>
+      <button onclick="remove()">remove</button>
+      <input type="hidden" value="1" id="total_course">
+      <button type="submit" class="btn">Register</button>
     </form>
-      <p id="error-msg" class="error-msg"></p>
+    <p id="error-msg" class="error-msg"></p>
   </div>
   <script>
-    function add(){
-      var new_course_no = parseInt($('#total_course').val())+1;
-      if(new_course_no<=4){
-        var new_input="<label for='coursetaken"+new_course_no+"'></label>"+
-        "<input type='text' id='coursetaken"+new_course_no+"' name='coursetaken"+new_course_no+"' minlength='4' placeholder='Enter course'>"+
-        "<span id='coursetaken"+new_course_no+"Error class='error'></span>";
+    function add() {
+      var new_course_no = parseInt($('#total_course').val()) + 1;
+      if (new_course_no <= 4) {
+        var new_input = "<label for='coursetaken" + new_course_no + "'></label>" +
+          "<input type='text' id='coursetaken" + new_course_no + "' name='coursetaken" + new_course_no + "' minlength='4' placeholder='Enter course'>" +
+          "<span id='coursetaken" + new_course_no + "Error class='error'></span>";
         $('#new_course').append(new_input);
         $('#total_course').val(new_course_no)
       }
     }
-    function remove(){
+    function remove() {
       var last_course_no = $('#total_course').val();
-      if(last_course_no>1){
-        $('#coursetaken'+last_course_no).remove();
-        $('#total_course').val(last_course_no-1);
+      if (last_course_no > 1) {
+        $('#coursetaken' + last_course_no).remove();
+        $('#total_course').val(last_course_no - 1);
       }
     }
   </script>

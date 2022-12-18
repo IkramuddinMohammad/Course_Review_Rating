@@ -65,6 +65,23 @@ module.exports = {
         return studentData._id;
     },
 
+    async updateProfile(id, courseTaken) {
+        id = validate.validateId("updateProfile", id, "review Id");
+        courseTaken = validate.validateString("updateProfile", courseTaken, "courseTaken")
+        const studentColection = await students();
+        const updatedprofile = {};
+        updateStudentData = await studentColection.updateOne({
+            _id: ObjectId(id)
+        }, {
+            $push: {
+            coursesList: courseTaken
+            }
+        });
+        
+        if (!updateStudentData.matchedCount && !updateStudentData.modifiedCount) throw "updateProfile: Update of student profile failed";
+        return await this.getStudents(id);
+    },
+
     async checkStudent(email, password) {
         email = validate.validateEmail("checkStudent", email, "Email");
         password = validate.validatePassword("checkStudent", password);

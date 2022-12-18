@@ -127,11 +127,7 @@ router.route("/:id/edit")
       });
     }
     try {
-      const reviewInfo = await reviews.getReview(id);
       await reviews.updateReview(id, semesterVal, rating, reviewText);
-      if (studentId === reviewInfo.studentId) {
-        isStudentReviewer = true;
-      }
       return res.status(200).redirect("/courses");
     } catch (error) {
       return res.status(404).render("error", {

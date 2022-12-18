@@ -2,6 +2,10 @@
     <div class="container-widemode" id="positionfixed">
         <h1>{{firstName}} {{lastName}} </h1>
         <p>{{email}}</p>
+        {{#each courseslist}}
+            <p>{{ this }}</p>
+        {{/each}}
+        <button id="editprofile_popup" class="checkbtn" onclick="openEditProfile()">Add course</button>
     </div>
 
     <div class="container-widemode" id="right">
@@ -23,68 +27,107 @@
                 <div class="reviewText">
                     <p>{{this.review.reviewText}}</p>
                 </div>
-                    <button id="edit_popup" class="checkbtn" onclick="openEdit()">Edit Review</button>
-                    <button id="delete_popup" class="checkbtn" onclick="location.href='../reviews/{{this.course._id}}/{{this.review._id}}/delete';">Delete Review</button> 
+                <button id="edit_popup" class="checkbtn" onclick="openEdit()">Edit Review</button>
+                <button id="delete_popup" class="checkbtn"
+                    onclick="location.href='../reviews/{{this.course._id}}/{{this.review._id}}/delete';">Delete
+                    Review</button>
+            </div>
+            <div class="popup_window" id="openedit_form">
+                <h2>Edit Review</h2>
+                <form id="editreview_form" action="/reviews/{{this.review._id}}/edit"
+                    onsubmit="return editreviewValidate(this);" method="POST">
+                    <label for="courseName"> </label>
+                    <input type="text" name="courseName" id="courseName" value="{{this.course.name}}">
+                    <label for="reviewersemester"> </label>
+                    <input type="text" name="semesterVal" id="semesterVal" value="{{this.review.semesterVal}}">
+                    <label for="rating"> </label>
+                    <input type="number" name="rating" id="rating" value="{{this.review.rating}}">
+                    <span id="ratingError" class="error"></span>
+                    <label for="reviewText"></label>
+                    <input type="text" name="reviewText" id="reviewText" value="{{this.review.reviewText}}">
+                    <span id="reviewTextError" class="error"></span>
+                    <button type="submit" class="btn">Edit Review</button>
+                    <button type="button" class="btn cancel" onclick="closeEditReview()">Cancel</button>
+                </form>
+            </div>
+            {{/each}}
+            <div class="popup_window" id="openeditProfile_form">
+                <h2>Edit Profile</h2>
+                <form id="editprofile_form" action="/students/edit" onsubmit="return editprofileValidate(this);"
+                    method="POST">
+                    <label for="courseTaken"></label>
+                    <input type="text" id="courseTaken" name="courseTaken" minlength="4"
+                        placeholder="Same as listed in courses(case sensitive)">
+                    <span id="coursetakenError" class="error"></span>
+                    <button type="submit" class="btn">Add course</button>
+                    <button type="button" class="btn cancel" onclick="closeEditProfileReview()">Cancel</button>
+                </form>
+            </div>
         </div>
-        <div class="popup_window" id="openedit_form">
-        <h2>Edit Review</h2>
-        <form id="editreview_form" action="/reviews/{{this.review._id}}/edit" onsubmit="return editreviewValidate(this);"
-            method="POST">
-            <label for="courseName"> </label>
-                <input type="text" name="courseName" id="courseName" value="{{this.course.name}}">
-           <label for="reviewersemester"> </label>
-                <input type="text" name="semesterVal" id="semesterVal" value="{{this.review.semesterVal}}">
-            <label for="rating"> </label>
-                <input type="number" name="rating" id="rating" value="{{this.review.rating}}">
-                <span id="ratingError" class="error"></span>  
-            <label for="reviewText"></label>
-                <input type="text" name="reviewText" id="reviewText" value="{{this.review.reviewText}}">
-                <span id="reviewTextError" class="error"></span> 
-            <button type="submit" class="btn">Edit Review</button>
-            <button type="button" class="btn cancel" onclick="closeEditReview()">Cancel</button>
-        </form>
-        </div>
-        {{/each}}
-    </div>
-    
-    <script>
-    function openEdit() {
-            document.getElementById("openedit_form").style.display = "block";
-        }
-        function closeEditReview() {
-            document.getElementById("openedit_form").style.display = "none";
-        }
-        function editreviewValidate(form) {
-            const ratingError = document.getElementById('ratingError');
-            const reviewTextError = document.getElementById('reviewTextError');
-            if (form) {
-                var valid = false;
-                let rating = document.forms["review_form"]["rating"].value;
-                let reviewText = document.forms["review_form"]["reviewText"].value;
 
-                if (reviewText.trim().length == 0) {
-                    reviewTextError.style.display = "block";
-                    reviewTextError.innerHTML = "Please enter review"
-                    valid = true
-                    return false
-                }
-                if (!/^[0-9]+$/.test(rating)) {
-                    ratingError.style.display = "block";
-                    ratingError.innerHTML = "Please enter rating"
-                    valid = true
-                    return false
-                } else if (rating < 1 || rating > 5) {
-                    ratingError.style.display = "block";
-                    ratingError.innerHTML = "Please enter rating between 1 and 5"
-                    valid = true
-                    return false
-                }
-                if (!valid) {
-                    ratingError.style.display = "none";
-                    reviewTextError.style.display = "none";
-                    return true;
+
+        <script>
+            function openEdit() {
+                document.getElementById("openedit_form").style.display = "block";
+            }
+            function openEditProfile() {
+                document.getElementById("openeditProfile_form").style.display = "block";
+            }
+            function closeEditReview() {
+                document.getElementById("openedit_form").style.display = "none";
+            }
+            function closeEditProfileReview() {
+                document.getElementById("openeditProfile_form").style.display = "none";
+            }
+            function editreviewValidate(form) {
+                const ratingError = document.getElementById('ratingError');
+                const reviewTextError = document.getElementById('reviewTextError');
+                if (form) {
+                    var valid = false;
+                    let rating = document.forms["review_form"]["rating"].value;
+                    let reviewText = document.forms["review_form"]["reviewText"].value;
+
+                    if (reviewText.trim().length == 0) {
+                        reviewTextError.style.display = "block";
+                        reviewTextError.innerHTML = "Please enter review"
+                        valid = true
+                        return false
+                    }
+                    if (!/^[0-9]+$/.test(rating)) {
+                        ratingError.style.display = "block";
+                        ratingError.innerHTML = "Please enter rating"
+                        valid = true
+                        return false
+                    } else if (rating < 1 || rating > 5) {
+                        ratingError.style.display = "block";
+                        ratingError.innerHTML = "Please enter rating between 1 and 5"
+                        valid = true
+                        return false
+                    }
+                    if (!valid) {
+                        ratingError.style.display = "none";
+                        reviewTextError.style.display = "none";
+                        return true;
+                    }
                 }
             }
-        }
+            function editProfileValidate(form) {
+                const coursetakenError = document.getElementById('coursetakenError');
+                if (form) {
+                    var valid = false;
+                    let courseTaken = document.forms["editprofile_form"]["coursetaken"].value;
+
+                    if (courseTaken.trim().length == 0) {
+                        coursetakenError.style.display = "block";
+                        coursetakenError.innerHTML = "Please enter course id same as in the site and it is case senstivive"
+                        valid = true
+                        return false
+                    }
+                    if (!valid) {
+                        return true;
+                    }
+                }
+            }
+
         </script>
 </main>

@@ -453,7 +453,6 @@ router.get("/:id", async (req, res) => {
           if(studentData.coursesList){
             let getStuCourseList = studentData.coursesList
             for(let i=0; i<getStuCourseList.length; i++){
-              console.log("test",course.courseId.toString(), getStuCourseList[i].toString())
               if(course.courseId.toString() === getStuCourseList[i].toString()){
                 studentData.reviewbtnEnable =true
                 break 

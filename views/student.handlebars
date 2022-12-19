@@ -7,19 +7,9 @@
         {{#each reviews}}
         <div>
             <div class="container-fullmode">
-                <div class="reviewHeading">
-                    <div class="reviewerName">
-                        <p class="course_name"><a href="/courses/{{this.course._id}}">{{this.course.name}}</a></p>
-                    </div>
-                    <div class="reviewerRating">
-                        <p class="course_rating"><a href="/reviews/{{this.review._id}}">Rating:
-                                {{this.review.rating}}</a></p>
-                    </div>
-                </div>
-
-                <div class="reviewText">
-                    <p>{{this.review.reviewText}}</p>
-                </div>
+                <p class="course_name"><a href="/courses/{{this.course._id}}">{{this.course.name}}</a></p>
+                <p class="course_rating"><a href="/reviews/{{this.review._id}}">Rating:{{this.review.rating}}</a></p>
+                <p>{{this.review.reviewText}}</p>
             </div>
         </div>
         {{/each}}
